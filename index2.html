@@ -1,0 +1,1112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Dreamy Runners | Grupo de Senderismo</title>
+  <meta name="description" content="Grupo de senderismo: galería de caminatas, quiénes somos, calendario de eventos y confirmación de asistencia." />
+  <style>
+:root{--green:#1852ad;--dark:#173a6d;--bg:#f3f8f9;--card:#fff;--mut:#737f8c;--line:#d9e5ec}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:#343d4c}
+.container{max-width:1080px;margin:0 auto;padding:0 20px}
+.nav{position:sticky;top:0;background:#fff;border-bottom:1px solid var(--line);z-index:10}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:60px}
+.brand{font-weight:800;color:var(--green);text-decoration:none;font-size:1.2rem}
+.links a{margin-left:16px;color:#39485d;text-decoration:none;font-weight:600}
+.links a:hover{color:var(--green)}
+.utilbar{background:#083c90;color:#fff;position:sticky;top:0;z-index:30;overflow:hidden}
+.util-inner{display:flex;align-items:center;justify-content:space-around;gap:10px;height:52px;padding-right:0}
+.util-inner a{color:#fff;text-decoration:none;font-weight:500;font-size:.95rem;white-space:nowrap}
+.util-inner a:hover{text-decoration:underline}
+@media(max-width:860px){.util-inner{justify-content:flex-start;overflow-x:auto;padding-right:0}.util-inner a{font-size:.85rem}}
+.hero{background:linear-gradient(180deg,#e3edf6,#f3f8f9);padding:56px 0 32px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:32px;align-items:center}
+.kicker{color:var(--green);font-weight:700;text-transform:uppercase;letter-spacing:.06em;font-size:.8rem}
+h1{font-size:2.6rem;line-height:1.05;margin:.4em 0}
+.lead{font-size:1.1rem;color:#49586d}
+.subevent{font-size:1.15rem;letter-spacing:.08em;color:var(--green);margin:14px 0 0;font-weight:800}
+.cta-row{display:flex;gap:12px;margin:18px 0}
+.btn{border:1px solid var(--green);padding:10px 18px;border-radius:10px;cursor:pointer;text-decoration:none;font-weight:700;display:inline-block;background:#fff;color:var(--green)}
+.btn.primary{background:var(--green);color:#fff}
+.btn.ghost{background:#fff}
+.btn.small{font-size:.85rem;padding:6px 12px;margin-top:10px}
+.stats{display:flex;gap:28px;margin-top:10px}
+.stats strong{display:block;font-size:1.5rem}
+.stats span{color:var(--mut);font-size:.9rem}
+.carousel{position:relative;overflow:hidden;border-radius:16px;box-shadow:0 12px 30px rgba(0,0,0,.15);background:#000}
+.carousel .slides{display:flex;transition:transform .5s ease;touch-action:pan-y}
+.carousel .slide{min-width:100%;margin:0;position:relative}
+.carousel .slide img{width:100%;height:340px;object-fit:cover;display:block;border-radius:0;box-shadow:none}
+.carousel .slide figcaption{position:absolute;left:0;right:0;bottom:0;background:linear-gradient(transparent,rgba(0,0,0,.7));color:#fff;font-size:.85rem;padding:28px 14px 12px;text-align:center}
+.car-btn{position:absolute;top:45%;width:38px;height:38px;border-radius:50%;border:none;background:rgba(255,255,255,.9);font-size:1.4rem;cursor:pointer;line-height:1}
+.car-btn.prev{left:10px}.car-btn.next{right:10px}
+.dots{position:absolute;bottom:38px;left:0;right:0;display:flex;gap:6px;justify-content:center}
+.dots button{width:9px;height:9px;border-radius:50%;border:none;background:rgba(255,255,255,.5);cursor:pointer;padding:0}
+.dots button.on{background:#fff}
+.section{padding:52px 0}
+.section.alt{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.muted{color:var(--mut)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;box-shadow:0 4px 14px rgba(0,0,0,.04)}
+.gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px}
+.gallery figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.gallery img{width:100%;height:180px;object-fit:cover;display:block}
+.gallery figcaption{padding:8px 12px;font-size:.9rem}
+.values{padding-left:18px}.facts{list-style:none;padding:0}.facts li{padding:6px 0;border-bottom:1px dashed var(--line)}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px}
+.cal-layout{display:grid;grid-template-columns:360px 1fr;gap:20px;margin-top:16px}
+.cal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.cal-head button{border:1px solid var(--line);background:#fff;border-radius:8px;width:34px;height:34px;font-size:1.2rem;cursor:pointer}
+.cal-weekdays,.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;text-align:center}
+.cal-weekdays{color:var(--mut);font-size:.8rem;margin-bottom:4px}
+.cal-grid div{min-height:44px;border:1px solid var(--line);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:.9rem;background:#fff}
+.cal-grid .empty{background:transparent;border:none}
+.cal-grid .has{background:#e1ecf8;border-color:var(--green);font-weight:700;cursor:pointer}
+.cal-grid .dot{width:6px;height:6px;background:var(--green);border-radius:50%}
+.event-list{display:flex;flex-direction:column;gap:12px}
+.event{border-left:5px solid var(--green)}
+.event h4{margin:0 0 4px}
+.event .meta{font-size:.9rem;color:var(--mut)}
+.event .actions{margin-top:8px;display:flex;gap:8px}
+.form label{display:block;margin:10px 0;font-weight:600}
+.form input,.form select,.form textarea{width:100%;margin-top:6px;padding:10px;border:1px solid var(--line);border-radius:8px;font:inherit}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.ok{color:var(--green);font-weight:700}
+.conteo{display:flex;flex-direction:column;gap:10px;margin-bottom:16px}
+.count-bar{background:#ecf1f6;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.count-bar .bar{height:8px;background:#ceddeb;border-radius:99px;overflow:hidden;margin-top:6px}
+.count-bar .fill{height:100%;background:var(--green)}
+footer{padding:22px 0;background:var(--dark);color:#d5e5f6}
+.foot{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.foot .muted{color:#a4b6c9}
+@media(max-width:860px){.hero-grid,.grid-2,.cal-layout,.gallery{grid-template-columns:1fr}.gallery img{height:200px}h1{font-size:2rem}}
+
+.nav-toggle{display:none;background:#fff;border:1px solid var(--line);border-radius:8px;width:42px;height:38px;font-size:1.3rem;cursor:pointer}
+.cta-row{flex-wrap:wrap}.section-head{flex-wrap:wrap}
+.badge{font-size:.7rem;background:#e2e5e7;color:#646f79;border-radius:99px;padding:2px 8px;vertical-align:middle;font-weight:600}
+.cal-grid .has.past{background:#edeff1;border-color:#b8bfc5;color:#667}
+.cal-grid .has.past .dot{background:#98a1a9}
+.past-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:18px}
+.past{padding:0;overflow:hidden}
+.past img.cover{width:100%;height:200px;object-fit:cover;display:block}
+.past .body{padding:16px}
+.past h4{margin:0 0 4px;font-size:1.1rem}
+.stories{margin-top:10px;display:flex;flex-direction:column;gap:10px}
+.story{margin:0;background:#f0f7fa;border-left:4px solid var(--green);border-radius:8px;padding:10px 12px;font-size:.92rem;line-height:1.45}
+.story .by{font-weight:700;color:var(--green)}
+.story img{width:100%;max-height:240px;object-fit:cover;border-radius:8px;margin-top:8px;display:block}
+:focus-visible{outline:3px solid #eab308;outline-offset:2px}
+@media(max-width:860px){
+  .nav-toggle{display:block}
+  .links{display:none;position:absolute;top:60px;left:0;right:0;background:#fff;border-bottom:1px solid var(--line);padding:6px 20px;flex-direction:column;box-shadow:0 10px 20px rgba(0,0,0,.08)}
+  .links.open{display:flex}
+  .links a{margin:0;padding:12px 0;border-bottom:1px solid var(--line)}
+  .links a:last-child{border-bottom:none}
+  .past-grid,.row{grid-template-columns:1fr}
+}
+
+.brand-bar{font-weight:800 !important;font-size:1.1rem !important}
+#car-slot{position:relative}
+.car-min{display:none;position:absolute;top:8px;right:8px;z-index:3;width:30px;height:30px;border-radius:50%;border:none;background:rgba(255,255,255,.9);font-size:1.1rem;cursor:pointer;line-height:1}
+.carousel.flotante{position:fixed;right:18px;bottom:18px;width:300px;z-index:20;box-shadow:0 12px 30px rgba(0,0,0,.35)}
+.carousel.flotante .slide img{height:170px}
+.carousel.flotante .slide figcaption{font-size:.75rem;padding:18px 10px 8px}
+.carousel.flotante .dots{bottom:30px}
+.carousel.flotante .car-btn{width:30px;height:30px;font-size:1.1rem}
+.carousel.flotante .car-min{display:block}
+.carousel.flotante.min{width:56px;height:56px;border-radius:50%;background:var(--green)}
+.carousel.flotante.min .slides,.carousel.flotante.min .car-btn,.carousel.flotante.min .dots{display:none}
+.carousel.flotante.min .car-min{position:static;width:100%;height:100%;border-radius:50%;background:var(--green);color:#fff;font-size:1.4rem}
+html{scroll-padding-top:64px}
+@media(max-width:860px){.carousel.flotante{width:200px;right:10px;bottom:10px}.carousel.flotante .slide img{height:120px}.carousel.flotante .slide figcaption{display:none}.carousel.flotante .dots{bottom:8px}}
+
+.proximos{display:flex;flex-direction:column;gap:10px;margin-top:12px;max-width:460px}
+.prox{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid var(--line);border-left:5px solid var(--green);border-radius:12px;padding:10px 12px}
+.prox-fecha{display:flex;flex-direction:column;align-items:center;min-width:46px;line-height:1.1}
+.prox-fecha strong{font-size:1.4rem;color:var(--green)}
+.prox-fecha span{font-size:.8rem;text-transform:capitalize;color:var(--mut)}
+.prox-info{flex:1;display:flex;flex-direction:column;font-size:.9rem;gap:2px}
+.prox .btn{margin:0}
+/* Carrusel flotante: circular y semitransparente */
+.carousel.flotante{width:230px;height:230px;border-radius:50%;opacity:.8;transition:opacity .2s}
+.carousel.flotante:hover,.carousel.flotante:focus-within{opacity:1}
+.carousel.flotante .slide img{height:230px}
+.carousel.flotante .slide figcaption{display:none}
+.carousel.flotante .dots{bottom:16px}
+.carousel.flotante .car-btn{top:calc(50% - 15px)}
+.carousel.flotante .car-btn.prev{left:8px}.carousel.flotante .car-btn.next{right:8px}
+.carousel.flotante .car-min{top:12px;left:50%;right:auto;margin-left:-15px}
+.carousel.flotante.min{width:56px;height:56px;opacity:.9}
+.carousel.flotante.min .car-min{margin:0}
+@media(max-width:860px){.carousel.flotante{width:150px;height:150px}.carousel.flotante .slide img{height:150px}.carousel.flotante .dots{bottom:10px}.carousel.flotante.min{width:48px;height:48px}}
+
+/* Menú: cinta redondeada, flotante y semitransparente */
+.utilbar{background:transparent;overflow:visible;top:calc(env(safe-area-inset-top,0px) + 10px);margin-top:10px;height:52px}
+.utilbar .util-inner{width:calc(100% - 24px);max-width:1040px;margin:0 auto;padding:0 28px;border-radius:999px;background:rgba(8,60,144,.78);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 8px 22px rgba(0,0,0,.18);border:1px solid rgba(255,255,255,.18)}
+.utilbar .util-inner::-webkit-scrollbar{display:none}
+.utilbar .util-inner{scrollbar-width:none}
+@media(max-width:860px){.utilbar .util-inner{padding:0 18px}}
+
+.util-inner a.activo{background:rgba(255,255,255,.2);padding:7px 16px;border-radius:999px;font-weight:700}
+
+/* Botón de administrador en la cinta */
+.util-inner a.admin-btn{background:linear-gradient(180deg,rgba(255,224,138,.96),rgba(234,179,8,.96));color:#5a3d00;font-weight:800;padding:8px 18px;border-radius:999px;box-shadow:0 3px 10px rgba(0,0,0,.2);border:1px solid rgba(255,243,196,.9)}
+.util-inner a.admin-btn:hover{text-decoration:none;filter:brightness(1.06)}
+/* Calendario: el detalle se superpone */
+.cal-layout{grid-template-columns:1fr}
+.cal-layout .card{position:relative}
+.cal-grid div{min-height:56px}
+.cal-pop{position:absolute;inset:0;background:rgba(255,255,255,.88);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);border-radius:14px;padding:26px 20px 20px;overflow:auto;z-index:5}
+.cal-pop[hidden]{display:none}
+.pop-close{position:absolute;top:10px;right:10px;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:#fff;cursor:pointer;font-size:1rem}
+.pop-ev{max-width:560px;margin:0 auto 16px;border-left:5px solid var(--green);padding-left:14px}
+.pop-ev h4{margin:0 0 4px;font-size:1.2rem}
+.pop-ev .meta{font-size:.9rem;color:var(--mut)}
+/* Pie de página con contactos */
+.foot{align-items:center}
+.foot-links{display:flex;gap:18px;flex-wrap:wrap}
+.foot-links a{color:#d5e5f6;text-decoration:none}
+.foot-links a:hover{text-decoration:underline}
+/* Admin */
+.adm-bar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.adm-bar .btn{margin:0}
+.adm-ev{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px;padding:14px 16px}
+.inscritos{max-height:320px;overflow:auto;border:1px solid var(--line);border-radius:10px;padding:10px;background:#fafcfe}
+.inscritos table{width:100%;border-collapse:collapse;font-size:.9rem}
+.inscritos th,.inscritos td{border-bottom:1px solid var(--line);padding:6px;text-align:left}
+.modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:20px;z-index:50}
+.modal{max-width:520px;width:100%;max-height:90vh;overflow:auto}
+.modal[hidden],.modal-backdrop[hidden]{display:none}
+.modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:12px}
+.modal label{display:block;margin:8px 0;font-weight:600}
+.modal input,.modal select,.modal textarea{width:100%;margin-top:4px;padding:9px;border:1px solid var(--line);border-radius:8px;font:inherit}
+.modal .row{gap:10px}.modal .row label{margin:6px 0}
+.modal .opt-hint{margin:8px 0 2px;font-size:.8rem;color:var(--mut)}
+@media(max-width:860px){.modal .row{grid-template-columns:1fr 1fr}}
+
+/* ===== Más grande ===== */
+html{font-size:112.5%}
+.container{max-width:1280px}
+.utilbar{height:60px}.util-inner{height:60px}
+.utilbar .util-inner{max-width:1240px}
+.hero{padding:76px 0 48px}
+h1{font-size:3.2rem}
+.btn{padding:12px 22px}
+.btn.small{padding:7px 14px}
+.carousel .slide img{height:450px}
+.section{padding:68px 0}
+.past img.cover{height:250px}
+.cal-grid div{min-height:70px}
+.carousel.flotante{width:270px;height:270px}
+.carousel.flotante .slide img{height:270px}
+.carousel.flotante.min{width:60px;height:60px}
+/* ===== Calendario: tarjeta pequeña (hover) y grande (clic) ===== */
+.cal-tip{position:absolute;z-index:7;background:#fff;border:2px solid var(--green);border-radius:12px;padding:10px 14px;box-shadow:0 10px 26px rgba(0,0,0,.25);font-size:.9rem;line-height:1.45;pointer-events:none;width:max-content;max-width:260px}
+.cal-tip[hidden]{display:none}
+.cal-tip hr{border:none;border-top:1px solid var(--line);margin:6px 0}
+.cal-pop{background:rgba(23,58,109,.32);-webkit-backdrop-filter:none;backdrop-filter:none;display:flex;align-items:center;justify-content:center;padding:18px}
+.cal-pop[hidden]{display:none}
+.pop-card{position:relative;background:#fff;border-radius:16px;padding:26px;max-width:540px;width:100%;max-height:100%;overflow:auto;box-shadow:0 20px 50px rgba(0,0,0,.3)}
+.pop-ev{max-width:none;margin:0 0 16px}
+.cal-grid .has:focus-visible{outline:3px solid #eab308}
+/* ===== Experiencias ===== */
+.buscar{width:100%;padding:14px 20px;border:1px solid var(--line);border-radius:999px;font:inherit;margin-bottom:22px;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.04)}
+.rxbar{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0}
+.rx{border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 11px;cursor:pointer;font:inherit}
+.rx.on{background:#e1ecf8;border-color:var(--green);font-weight:700}
+.coms{display:flex;flex-direction:column;gap:6px;margin:8px 0}
+.com{background:#f0f7fa;border-radius:10px;padding:8px 12px;font-size:.92rem;line-height:1.4}
+.com-form{display:flex;flex-direction:column;gap:6px;margin-top:10px}
+.com-form input{padding:9px 12px;border:1px solid var(--line);border-radius:10px;font:inherit;min-width:0}
+.com-row{display:flex;gap:6px}.com-row input{flex:1}.com-row .btn{margin:0}
+.emo{display:flex;gap:2px;flex-wrap:wrap}
+.emo-btn{border:none;background:none;font-size:1.25rem;cursor:pointer;padding:2px 4px}
+/* ===== Redes sociales ===== */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:20px 0}
+.tabs button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 20px;font:inherit;font-weight:700;cursor:pointer;color:#39485d}
+.tabs button.on{background:var(--green);color:#fff;border-color:var(--green)}
+.tab-panel[hidden]{display:none}
+.red-head{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.red-ico{font-size:2.4rem;line-height:1}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:12px 0 18px}
+.tiles img{width:100%;height:170px;object-fit:cover;border-radius:10px;display:block}
+.inscritos select,.adm-bar select{padding:6px 8px;border:1px solid var(--line);border-radius:8px;font:inherit}
+.inscritos input{padding:6px 8px;border:1px solid var(--line);border-radius:8px;font:inherit}
+@media(max-width:860px){
+  html{font-size:106%}
+  .carousel .slide img{height:300px}
+  .carousel.flotante{width:150px;height:150px}.carousel.flotante .slide img{height:150px}.carousel.flotante.min{width:48px;height:48px}
+  .past img.cover{height:210px}.tiles img{height:110px}h1{font-size:2.3rem}
+}
+.cal-tip,.cal-pop{z-index:25}
+
+/* ===== Detalles ===== */
+:root{color-scheme:light}
+input,select,textarea{background:#fff;color:#343d4c}
+.com{display:flex;flex-direction:column;gap:2px}
+.com strong{display:block}
+.pop-foto{width:100%;height:190px;object-fit:cover;border-radius:12px;margin-bottom:12px;display:block}
+.asis-form .actions{display:flex;gap:8px;margin-top:10px}
+.asis-form .actions .btn{margin:0}
+.ev-prev{margin:6px 0 10px}.ev-prev img{max-height:120px;border-radius:8px;display:block;margin-bottom:6px}
+.adm-th{width:72px;height:54px;object-fit:cover;border-radius:8px}
+.adm-btns{display:flex;gap:6px;flex-wrap:wrap}.adm-btns .btn{margin:0}
+/* Experiencias se ve más pequeña, como antes */
+#galeria{zoom:.89}
+#galeria .past img.cover{height:225px}
+
+.btn.peligro{background:#b3261e;color:#fff;border-color:#b3261e}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#173a6d;color:#fff;padding:12px 20px;border-radius:999px;box-shadow:0 8px 24px rgba(0,0,0,.3);z-index:100;max-width:90vw;text-align:center}
+/* ===== Dreamy Bot: círculo semitransparente abajo a la izquierda ===== */
+.bot{position:fixed;left:18px;bottom:18px;z-index:40}
+.bot-fab{width:72px;height:72px;border-radius:50%;border:1px solid rgba(255,255,255,.5);background:linear-gradient(160deg,var(--green),var(--dark));color:#fff;font-size:2rem;line-height:1;cursor:pointer;opacity:.8;transition:opacity .2s,transform .2s;box-shadow:0 12px 30px rgba(0,0,0,.35)}
+.bot-fab:hover,.bot-fab:focus-visible,.bot-fab[aria-expanded="true"]{opacity:1;transform:scale(1.05)}
+.bot-panel{position:absolute;left:0;bottom:86px;width:370px;max-width:calc(100vw - 24px);height:500px;max-height:72vh;display:flex;flex-direction:column;background:rgba(255,255,255,.93);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:26px;box-shadow:0 20px 50px rgba(0,0,0,.3);overflow:hidden}
+.bot-panel[hidden]{display:none}
+.bot-panel header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:var(--green);color:#fff;font-weight:800}
+.bot-x{border:none;background:rgba(255,255,255,.2);color:#fff;width:30px;height:30px;border-radius:50%;cursor:pointer}
+.bot-msgs{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:8px}
+.m{max-width:88%;padding:10px 14px;border-radius:18px;font-size:.92rem;line-height:1.45}
+.m ul,.m ol{margin:6px 0;padding-left:20px}
+.m-bot{align-self:flex-start;background:#e6eef9;border-bottom-left-radius:6px}
+.m-user{align-self:flex-end;background:var(--green);color:#fff;border-bottom-right-radius:6px}
+.m a{color:var(--green);font-weight:700}
+.bot-chips{display:flex;gap:6px;flex-wrap:wrap;padding:0 14px 8px;max-height:112px;overflow:auto}
+.chip{border:1px solid var(--green);background:#fff;color:var(--green);border-radius:999px;padding:6px 12px;font:inherit;font-size:.82rem;font-weight:700;cursor:pointer}
+.chip:hover{background:var(--green);color:#fff}
+.bot-form{display:flex;gap:6px;padding:10px 14px 14px;border-top:1px solid var(--line)}
+.bot-form input{flex:1;min-width:0;padding:10px 14px;border:1px solid var(--line);border-radius:999px;font:inherit}
+.bot-form .btn{margin:0}
+@media(max-width:860px){.bot{left:10px;bottom:10px}.bot-fab{width:58px;height:58px;font-size:1.6rem}.bot-panel{bottom:70px}}
+
+:root{box-sizing:border-box;padding-bottom:env(safe-area-inset-bottom,0px)}
+body{padding-top:env(safe-area-inset-top,0px)}
+
+</style>
+</head>
+<body>
+  <!-- Barra de selección estilo imagen -->
+  <div class="utilbar">
+    <div class="container util-inner">
+      <a class="brand-bar" href="#todo">🥾 Dreamy Runners</a>
+      <a href="#inicio">Inicio</a>
+      <a href="#experiencias">Experiencias</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#contacto">Redes sociales</a>
+      <a class="admin-btn" href="#admin">Administradores</a>
+    </div>
+  </div>
+
+  <main>
+    <!-- INICIO -->
+    <section data-view="inicio" id="inicio" class="hero">
+      <div class="container hero-grid">
+        <div>
+          <p class="kicker">dreamy runners</p>
+          <h1>Senderismo Cundiboyacense</h1>
+          <p class="lead">Caminatas todos los fines de semana</p>
+          <h2 class="subevent">PRÓXIMOS EVENTOS</h2>
+          <div id="proximos" class="proximos"></div>
+        </div>
+        <div>
+          <div id="car-slot"><div class="hero-photo carousel" id="hero-carousel">
+            <div class="slides"></div>
+            <button class="car-btn prev" id="car-prev" aria-label="Anterior">‹</button>
+            <button class="car-btn next" id="car-next" aria-label="Siguiente">›</button>
+            <div class="dots" id="car-dots"></div>
+            <button class="car-min" id="car-min" aria-label="Minimizar fotos">–</button>
+          </div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALENDARIO (justo debajo del carrusel) -->
+    <section data-view="inicio" id="calendario" class="section alt">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Calendario</h2>
+          </div>
+        </div>
+
+        <div class="cal-layout">
+          <div class="card">
+            <div class="cal-head">
+              <button id="cal-prev" aria-label="Mes anterior">‹</button>
+              <strong id="cal-title">Mes</strong>
+              <button id="cal-next" aria-label="Mes siguiente">›</button>
+            </div>
+            <div class="cal-weekdays"><span>Lu</span><span>Ma</span><span>Mi</span><span>Ju</span><span>Vi</span><span>Sá</span><span>Do</span></div>
+            <div class="cal-grid" id="cal-grid"></div>
+            <div class="cal-pop" id="cal-pop" hidden></div>
+            <div class="cal-tip" id="cal-tip" hidden></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+
+    <section data-view="experiencias" id="galeria" class="section">
+      <div class="container">
+        <input id="buscar" class="buscar" type="search" placeholder="🔍 Buscar caminata, fecha o comentario…" aria-label="Buscar en Experiencias" />
+        <h2>Experiencias</h2>
+        <p class="muted">Caminatas ya realizadas por la comunidad. Reacciona con emojis y deja tu comentario.</p>
+        <div id="relatos" class="past-grid"></div>
+      </div>
+    </section>
+
+    <section data-view="nosotros" id="nosotros" class="section alt">
+      <div class="container grid-2">
+        <div>
+          <h2>Quiénes somos</h2>
+          <p>Somos <strong>Dreamy Runners</strong>, un grupo comunitario de senderismo que promueve el deporte al aire libre, el compañerismo y el respeto por la naturaleza. Organizamos caminatas de todos los niveles, desde principiantes hasta avanzados.</p>
+          <h3>Misión</h3>
+          <p>Fomentar un senderismo seguro, inclusivo y ambientalmente responsable, creando comunidad a través de la montaña.</p>
+          <h3>Visión</h3>
+          <p>Ser el grupo de referencia en senderismo local, con protocolos de seguridad claros y cero incidentes prevenibles.</p>
+          <ul class="values">
+            <li><strong>Seguridad primero:</strong> conteo de asistentes, guías y botiquín en cada salida.</li>
+            <li><strong>No dejar rastro:</strong> recogemos toda la basura y cuidamos flora y fauna.</li>
+            <li><strong>Todos bienvenidos:</strong> ritmos y rutas para cada nivel.</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Datos del grupo</h3>
+          <ul class="facts">
+            <li>Guías certificados: 6</li>
+            <li>Nivel de rutas: Básico · Intermedio · Avanzado</li>
+            <li>Punto de encuentro habitual: Parque Central, 6:00 a.m.</li>
+            <li>Contacto: <a href="mailto:hola@senderovivo.org">hola@senderovivo.org</a></li>
+          </ul>
+          <h3>Recomendaciones</h3>
+          <p class="muted">Lleva agua (2L), bloqueador, gorra, calzado con agarre, chaqueta impermeable y refrigerio. Avísanos si tienes alguna condición médica.</p>
+          <p class="muted"><strong>Emergencia en ruta:</strong> 123 · Guía líder: 300 000 0000</p>
+        </div>
+      </div>
+    </section>
+
+    <section data-view="contacto" id="contacto" class="section">
+      <div class="container">
+        <h2>Redes sociales</h2>
+        <p class="muted">Cada red tiene su espacio. Elige dónde quieres encontrarnos.</p>
+        <div class="tabs" role="tablist">
+          <button class="on" data-tab="whatsapp">💬 WhatsApp</button>
+          <button data-tab="instagram">📸 Instagram</button>
+          <button data-tab="facebook">👍 Facebook</button>
+          <button data-tab="tiktok">🎵 TikTok</button>
+          <button data-tab="correo">✉️ Correo y datos</button>
+        </div>
+        <div class="tab-panel" data-panel="whatsapp"><div class="card"><div class="red-head"><span class="red-ico">💬</span><div><h3 style="margin:0">WhatsApp</h3><p class="muted" style="margin:2px 0 0">Aquí se publican los comunicados de cada caminata: hora, punto de encuentro y recomendaciones.</p></div></div><ul class="facts"><li>1. Escríbenos y cuéntanos tu nombre.</li><li>2. Te agregamos al grupo de la comunidad.</li><li>3. Recibes cada comunicado y confirmas tu cupo en esta web.</li></ul><a class="btn primary" href="https://wa.me/573000000000?text=Hola%20quiero%20info%20de%20caminatas" target="_blank" rel="noopener">Escribir por WhatsApp</a></div></div>
+        <div class="tab-panel" data-panel="instagram" hidden><div class="card"><div class="red-head"><span class="red-ico">📸</span><div><h3 style="margin:0">Instagram</h3><p class="muted" style="margin:2px 0 0">Fotos y reels de cada salida.</p></div></div><p class="muted">Últimas publicaciones (de ejemplo):</p><div class="tiles"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA0MDAgMzAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzAnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9J2hzbCgzNDIsNDUlLDcyJSknLz48c3RvcCBvZmZzZXQ9JzEnIHN0b3AtY29sb3I9J2hzbCgzNDIsNDAlLDkwJSknLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0nNDAwJyBoZWlnaHQ9JzMwMCcgZmlsbD0ndXJsKCNnKScvPjxjaXJjbGUgY3g9JzMyMC4wJyBjeT0nNjYuMCcgcj0nMjEuMDAwMDAwMDAwMDAwMDA0JyBmaWxsPScjZmZmJyBvcGFjaXR5PScuNycvPjxwYXRoIGQ9J00wIDMwMCBMMTAwLjAgMTM1LjAgTDE2OC4wIDIxMC4wIEwyNjAuMCA5MC4wIEw0MDAgMjI1LjAgTDQwMCAzMDBaJyBmaWxsPSdoc2woMzQyLDM1JSwzOCUpJy8+PHBhdGggZD0nTTAgMzAwIEwxMjAuMCAxOTUuMCBMMjIwLjAwMDAwMDAwMDAwMDAzIDI1NS4wIEwzMjAuMCAxODAuMCBMNDAwIDI3MC4wIEw0MDAgMzAwWicgZmlsbD0naHNsKDM0Miw0MCUsMjQlKScvPjwvc3ZnPg==" alt="Publicación de ejemplo" loading="lazy" /><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA0MDAgMzAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzAnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9J2hzbCgxOSw0NSUsNzIlKScvPjxzdG9wIG9mZnNldD0nMScgc3RvcC1jb2xvcj0naHNsKDE5LDQwJSw5MCUpJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzQwMCcgaGVpZ2h0PSczMDAnIGZpbGw9J3VybCgjZyknLz48Y2lyY2xlIGN4PSczMjAuMCcgY3k9JzY2LjAnIHI9JzIxLjAwMDAwMDAwMDAwMDAwNCcgZmlsbD0nI2ZmZicgb3BhY2l0eT0nLjcnLz48cGF0aCBkPSdNMCAzMDAgTDEwMC4wIDEzNS4wIEwxNjguMCAyMTAuMCBMMjYwLjAgOTAuMCBMNDAwIDIyNS4wIEw0MDAgMzAwWicgZmlsbD0naHNsKDE5LDM1JSwzOCUpJy8+PHBhdGggZD0nTTAgMzAwIEwxMjAuMCAxOTUuMCBMMjIwLjAwMDAwMDAwMDAwMDAzIDI1NS4wIEwzMjAuMCAxODAuMCBMNDAwIDI3MC4wIEw0MDAgMzAwWicgZmlsbD0naHNsKDE5LDQwJSwyNCUpJy8+PC9zdmc+" alt="Publicación de ejemplo" loading="lazy" /><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA0MDAgMzAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzAnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9J2hzbCg1Niw0NSUsNzIlKScvPjxzdG9wIG9mZnNldD0nMScgc3RvcC1jb2xvcj0naHNsKDU2LDQwJSw5MCUpJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzQwMCcgaGVpZ2h0PSczMDAnIGZpbGw9J3VybCgjZyknLz48Y2lyY2xlIGN4PSczMjAuMCcgY3k9JzY2LjAnIHI9JzIxLjAwMDAwMDAwMDAwMDAwNCcgZmlsbD0nI2ZmZicgb3BhY2l0eT0nLjcnLz48cGF0aCBkPSdNMCAzMDAgTDEwMC4wIDEzNS4wIEwxNjguMCAyMTAuMCBMMjYwLjAgOTAuMCBMNDAwIDIyNS4wIEw0MDAgMzAwWicgZmlsbD0naHNsKDU2LDM1JSwzOCUpJy8+PHBhdGggZD0nTTAgMzAwIEwxMjAuMCAxOTUuMCBMMjIwLjAwMDAwMDAwMDAwMDAzIDI1NS4wIEwzMjAuMCAxODAuMCBMNDAwIDI3MC4wIEw0MDAgMzAwWicgZmlsbD0naHNsKDU2LDQwJSwyNCUpJy8+PC9zdmc+" alt="Publicación de ejemplo" loading="lazy" /></div><a class="btn primary" href="https://www.instagram.com/" target="_blank" rel="noopener">Ir a Instagram</a></div></div>
+        <div class="tab-panel" data-panel="facebook" hidden><div class="card"><div class="red-head"><span class="red-ico">👍</span><div><h3 style="margin:0">Facebook</h3><p class="muted" style="margin:2px 0 0">Álbumes completos y anuncios de eventos.</p></div></div><p class="muted">Álbumes recientes (de ejemplo):</p><div class="tiles"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA0MDAgMzAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzAnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9J2hzbCg5Myw0NSUsNzIlKScvPjxzdG9wIG9mZnNldD0nMScgc3RvcC1jb2xvcj0naHNsKDkzLDQwJSw5MCUpJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzQwMCcgaGVpZ2h0PSczMDAnIGZpbGw9J3VybCgjZyknLz48Y2lyY2xlIGN4PSczMjAuMCcgY3k9JzY2LjAnIHI9JzIxLjAwMDAwMDAwMDAwMDAwNCcgZmlsbD0nI2ZmZicgb3BhY2l0eT0nLjcnLz48cGF0aCBkPSdNMCAzMDAgTDEwMC4wIDEzNS4wIEwxNjguMCAyMTAuMCBMMjYwLjAgOTAuMCBMNDAwIDIyNS4wIEw0MDAgMzAwWicgZmlsbD0naHNsKDkzLDM1JSwzOCUpJy8+PHBhdGggZD0nTTAgMzAwIEwxMjAuMCAxOTUuMCBMMjIwLjAwMDAwMDAwMDAwMDAzIDI1NS4wIEwzMjAuMCAxODAuMCBMNDAwIDI3MC4wIEw0MDAgMzAwWicgZmlsbD0naHNsKDkzLDQwJSwyNCUpJy8+PC9zdmc+" alt="Publicación de ejemplo" loading="lazy" /><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA0MDAgMzAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzAnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9J2hzbCgxMzAsNDUlLDcyJSknLz48c3RvcCBvZmZzZXQ9JzEnIHN0b3AtY29sb3I9J2hzbCgxMzAsNDAlLDkwJSknLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0nNDAwJyBoZWlnaHQ9JzMwMCcgZmlsbD0ndXJsKCNnKScvPjxjaXJjbGUgY3g9JzMyMC4wJyBjeT0nNjYuMCcgcj0nMjEuMDAwMDAwMDAwMDAwMDA0JyBmaWxsPScjZmZmJyBvcGFjaXR5PScuNycvPjxwYXRoIGQ9J00wIDMwMCBMMTAwLjAgMTM1LjAgTDE2OC4wIDIxMC4wIEwyNjAuMCA5MC4wIEw0MDAgMjI1LjAgTDQwMCAzMDBaJyBmaWxsPSdoc2woMTMwLDM1JSwzOCUpJy8+PHBhdGggZD0nTTAgMzAwIEwxMjAuMCAxOTUuMCBMMjIwLjAwMDAwMDAwMDAwMDAzIDI1NS4wIEwzMjAuMCAxODAuMCBMNDAwIDI3MC4wIEw0MDAgMzAwWicgZmlsbD0naHNsKDEzMCw0MCUsMjQlKScvPjwvc3ZnPg==" alt="Publicación de ejemplo" loading="lazy" /><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA0MDAgMzAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzAnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9J2hzbCgxNjcsNDUlLDcyJSknLz48c3RvcCBvZmZzZXQ9JzEnIHN0b3AtY29sb3I9J2hzbCgxNjcsNDAlLDkwJSknLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0nNDAwJyBoZWlnaHQ9JzMwMCcgZmlsbD0ndXJsKCNnKScvPjxjaXJjbGUgY3g9JzMyMC4wJyBjeT0nNjYuMCcgcj0nMjEuMDAwMDAwMDAwMDAwMDA0JyBmaWxsPScjZmZmJyBvcGFjaXR5PScuNycvPjxwYXRoIGQ9J00wIDMwMCBMMTAwLjAgMTM1LjAgTDE2OC4wIDIxMC4wIEwyNjAuMCA5MC4wIEw0MDAgMjI1LjAgTDQwMCAzMDBaJyBmaWxsPSdoc2woMTY3LDM1JSwzOCUpJy8+PHBhdGggZD0nTTAgMzAwIEwxMjAuMCAxOTUuMCBMMjIwLjAwMDAwMDAwMDAwMDAzIDI1NS4wIEwzMjAuMCAxODAuMCBMNDAwIDI3MC4wIEw0MDAgMzAwWicgZmlsbD0naHNsKDE2Nyw0MCUsMjQlKScvPjwvc3ZnPg==" alt="Publicación de ejemplo" loading="lazy" /></div><a class="btn primary" href="https://www.facebook.com/" target="_blank" rel="noopener">Ir a Facebook</a></div></div>
+        <div class="tab-panel" data-panel="tiktok" hidden><div class="card"><div class="red-head"><span class="red-ico">🎵</span><div><h3 style="margin:0">TikTok</h3><p class="muted" style="margin:2px 0 0">Videos cortos de las rutas y la comunidad.</p></div></div><p class="muted">Videos recientes (de ejemplo):</p><div class="tiles"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA0MDAgMzAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzAnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9J2hzbCgxOSw0NSUsNzIlKScvPjxzdG9wIG9mZnNldD0nMScgc3RvcC1jb2xvcj0naHNsKDE5LDQwJSw5MCUpJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzQwMCcgaGVpZ2h0PSczMDAnIGZpbGw9J3VybCgjZyknLz48Y2lyY2xlIGN4PSczMjAuMCcgY3k9JzY2LjAnIHI9JzIxLjAwMDAwMDAwMDAwMDAwNCcgZmlsbD0nI2ZmZicgb3BhY2l0eT0nLjcnLz48cGF0aCBkPSdNMCAzMDAgTDEwMC4wIDEzNS4wIEwxNjguMCAyMTAuMCBMMjYwLjAgOTAuMCBMNDAwIDIyNS4wIEw0MDAgMzAwWicgZmlsbD0naHNsKDE5LDM1JSwzOCUpJy8+PHBhdGggZD0nTTAgMzAwIEwxMjAuMCAxOTUuMCBMMjIwLjAwMDAwMDAwMDAwMDAzIDI1NS4wIEwzMjAuMCAxODAuMCBMNDAwIDI3MC4wIEw0MDAgMzAwWicgZmlsbD0naHNsKDE5LDQwJSwyNCUpJy8+PC9zdmc+" alt="Publicación de ejemplo" loading="lazy" /><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA0MDAgMzAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzAnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9J2hzbCgxMzAsNDUlLDcyJSknLz48c3RvcCBvZmZzZXQ9JzEnIHN0b3AtY29sb3I9J2hzbCgxMzAsNDAlLDkwJSknLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0nNDAwJyBoZWlnaHQ9JzMwMCcgZmlsbD0ndXJsKCNnKScvPjxjaXJjbGUgY3g9JzMyMC4wJyBjeT0nNjYuMCcgcj0nMjEuMDAwMDAwMDAwMDAwMDA0JyBmaWxsPScjZmZmJyBvcGFjaXR5PScuNycvPjxwYXRoIGQ9J00wIDMwMCBMMTAwLjAgMTM1LjAgTDE2OC4wIDIxMC4wIEwyNjAuMCA5MC4wIEw0MDAgMjI1LjAgTDQwMCAzMDBaJyBmaWxsPSdoc2woMTMwLDM1JSwzOCUpJy8+PHBhdGggZD0nTTAgMzAwIEwxMjAuMCAxOTUuMCBMMjIwLjAwMDAwMDAwMDAwMDAzIDI1NS4wIEwzMjAuMCAxODAuMCBMNDAwIDI3MC4wIEw0MDAgMzAwWicgZmlsbD0naHNsKDEzMCw0MCUsMjQlKScvPjwvc3ZnPg==" alt="Publicación de ejemplo" loading="lazy" /><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA0MDAgMzAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzAnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9J2hzbCg1Niw0NSUsNzIlKScvPjxzdG9wIG9mZnNldD0nMScgc3RvcC1jb2xvcj0naHNsKDU2LDQwJSw5MCUpJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzQwMCcgaGVpZ2h0PSczMDAnIGZpbGw9J3VybCgjZyknLz48Y2lyY2xlIGN4PSczMjAuMCcgY3k9JzY2LjAnIHI9JzIxLjAwMDAwMDAwMDAwMDAwNCcgZmlsbD0nI2ZmZicgb3BhY2l0eT0nLjcnLz48cGF0aCBkPSdNMCAzMDAgTDEwMC4wIDEzNS4wIEwxNjguMCAyMTAuMCBMMjYwLjAgOTAuMCBMNDAwIDIyNS4wIEw0MDAgMzAwWicgZmlsbD0naHNsKDU2LDM1JSwzOCUpJy8+PHBhdGggZD0nTTAgMzAwIEwxMjAuMCAxOTUuMCBMMjIwLjAwMDAwMDAwMDAwMDAzIDI1NS4wIEwzMjAuMCAxODAuMCBMNDAwIDI3MC4wIEw0MDAgMzAwWicgZmlsbD0naHNsKDU2LDQwJSwyNCUpJy8+PC9zdmc+" alt="Publicación de ejemplo" loading="lazy" /></div><a class="btn primary" href="https://www.tiktok.com/" target="_blank" rel="noopener">Ir a TikTok</a></div></div>
+        <div class="tab-panel" data-panel="correo" hidden>
+          <div class="card"><div class="red-head"><span class="red-ico">✉️</span><div><h3 style="margin:0">Correo y datos directos</h3></div></div>
+            <ul class="facts"><li>📧 <a href="mailto:hola@senderovivo.org">hola@senderovivo.org</a></li><li>📍 Punto de encuentro habitual: Parque Central, 6:00 a.m.</li><li>🚨 Emergencia en ruta: 123</li></ul>
+            <a class="btn primary" href="mailto:hola@senderovivo.org">Escribir un correo</a></div>
+        </div>
+      </div>
+    </section>
+
+    <section data-view="admin" id="admin" class="section">
+      <div class="container" style="max-width:960px">
+        <div id="login-box" class="card" style="max-width:480px;margin:0 auto">
+          <h2 style="margin-top:0">Acceso administradores</h2>
+          <p class="muted">Ingresa para gestionar eventos y comentarios.</p>
+          <form id="form-login" class="form">
+            <label>Usuario<input id="adm-user" type="text" placeholder="admin" required autocomplete="username" /></label>
+            <label>Contraseña<input id="adm-pass" type="password" placeholder="••••••••" required autocomplete="current-password" /></label>
+            <button class="btn primary" type="submit" style="width:100%">Entrar</button>
+            <p class="muted" style="font-size:.85rem">Demo inicial: usuario <code>admin</code> / clave <code>sendero123</code> (temporal).</p>
+            <p id="login-err" hidden style="color:#b3261e;font-weight:700">Usuario o clave incorrectos.</p>
+          </form>
+        </div>
+        <div id="admin-box" hidden>
+          <div class="section-head">
+            <div><h2 style="margin:0">Panel de administración</h2><p class="muted">Sesión iniciada como <strong id="adm-name"></strong>.</p></div>
+            <button class="btn small ghost" id="btn-salir">Cerrar sesión</button>
+          </div>
+          <h3>Eventos</h3>
+          <div class="adm-bar">
+            <button class="btn primary" id="btn-nuevo">+ Nuevo evento</button>
+          </div>
+          <div id="adm-eventos"></div>
+          <h3>Comentarios de Experiencias</h3>
+          <div id="adm-relatos"></div>
+        </div>
+        <div class="modal-backdrop" id="modal" hidden>
+          <form class="modal card" id="form-evento">
+            <h3 id="modal-title" style="margin-top:0">Nuevo evento</h3>
+            <input type="hidden" id="ev-id" />
+            <label>Título *<input id="ev-titulo" required pattern=".*\S.*" title="El título es obligatorio" placeholder="Ej. Caminata Laguna Verde" /></label>
+            <div class="row">
+              <label>Fecha *<input id="ev-fecha" type="date" required /></label>
+              <label>Hora *<input id="ev-hora" type="time" value="06:00" required /></label>
+            </div>
+            <label>Punto de encuentro o lugar *<input id="ev-punto" required pattern=".*\S.*" title="El punto de encuentro es obligatorio" placeholder="Parque Central" /></label>
+            <p class="opt-hint">Opcionales: puedes dejarlos vacíos.</p>
+            <div class="row">
+              <label>Distancia (km)<input id="ev-dist" type="number" step="any" min="0.1" placeholder="Ej. 10" /></label>
+              <label>Dificultad<select id="ev-dif"><option value="">Sin especificar</option><option>Básico</option><option>Intermedio</option><option>Avanzado</option></select></label>
+            </div>
+            <div class="row">
+              <label>Desnivel (m)<input id="ev-desn" type="number" min="0" step="any" placeholder="Ej. 450" /></label>
+              <label>Duración aprox.<input id="ev-dur" maxlength="30" placeholder="Ej. 4 h" /></label>
+            </div>
+            <div class="row">
+              <label>Edad mínima<input id="ev-emin" type="number" min="0" max="120" placeholder="Ej. 12" /></label>
+              <label>Edad máxima<input id="ev-emax" type="number" min="0" max="120" placeholder="Ej. 60" /></label>
+            </div>
+            <label>Mascotas<select id="ev-masc"><option value="">Sin especificar</option><option value="si">Permitidas</option><option value="no">No permitidas</option></select></label>
+            <label>Descripción<textarea id="ev-desc" rows="3" placeholder="Ruta, qué llevar, costo, etc."></textarea></label>
+            <label>Imagen del evento<input id="ev-foto" type="file" accept="image/*" /></label>
+            <div id="ev-prev" class="ev-prev"></div>
+            <div class="modal-actions">
+              <button type="button" class="btn ghost" id="modal-cancel">Cancelar</button>
+              <button type="submit" class="btn primary">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container foot">
+      <strong>🥾 Dreamy Runners</strong>
+      <nav class="foot-links" aria-label="Contacto">
+        <a href="https://wa.me/573000000000" target="_blank" rel="noopener">WhatsApp</a>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.facebook.com/" target="_blank" rel="noopener">Facebook</a>
+        <a href="https://www.tiktok.com/" target="_blank" rel="noopener">TikTok</a>
+        <a href="mailto:hola@senderovivo.org">hola@senderovivo.org</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/exceljs/4.4.0/exceljs.min.js"></script>
+  <script src="config.js"></script>
+<script>
+function phSvg(seed){const h=[...String(seed)].reduce((a,c)=>a+c.charCodeAt(0),0)*37%360;const w=600,H=450;const s=`<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${w} ${H}'><defs><linearGradient id='g' x1='0' y1='0' x2='0' y2='1'><stop offset='0' stop-color='hsl(${h},45%,72%)'/><stop offset='1' stop-color='hsl(${h},40%,90%)'/></linearGradient></defs><rect width='${w}' height='${H}' fill='url(#g)'/><path d='M0 ${H} L150 200 L250 315 L390 135 L600 340 L600 ${H}Z' fill='hsl(${h},35%,38%)'/><path d='M0 ${H} L180 290 L330 380 L480 270 L600 405 L600 ${H}Z' fill='hsl(${h},40%,24%)'/></svg>`;return 'data:image/svg+xml;base64,'+btoa(s);}
+/* Dreamy Runners · lógica del sitio */
+const LS_EV = 'senderismo_eventos_v3';
+const LS_AS = 'senderismo_asistencias_v1';
+// Si config.js trae la dirección de Google Sheets, las inscripciones también se envían a la hoja
+const HOJA = typeof SHEETS_URL !== 'undefined' && !!SHEETS_URL;
+const LS_ST = 'senderismo_comentarios_v1';
+const LS_RE = 'senderismo_reacciones_v1';
+
+/* ---------- Utilidades ---------- */
+// Limpia el texto antes de mostrarlo (evita que alguien inyecte código)
+const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+const HOY = iso(new Date());
+function proxSabado(k) { const d = new Date(); d.setDate(d.getDate() + ((6 - d.getDay() + 7) % 7 || 7) + k); return iso(d); }
+
+/* ---------- Datos de ejemplo ---------- */
+const seedEventos = [
+  { id: 'ev1', titulo: 'Caminata Laguna Verde', fecha: proxSabado(0), hora: '06:00', punto: 'Parque Central', dist: 12, dif: 'Intermedio', desc: 'Ruta de 12 km, llevar 2L de agua y almuerzo. Nivel intermedio.', foto: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA4MDAgNjAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzAnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9J2hzbCgzOSw0NSUsNzIlKScvPjxzdG9wIG9mZnNldD0nMScgc3RvcC1jb2xvcj0naHNsKDM5LDQwJSw5MCUpJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzgwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9J3VybCgjZyknLz48Y2lyY2xlIGN4PSc2NDAuMCcgY3k9JzEzMi4wJyByPSc0Mi4wMDAwMDAwMDAwMDAwMScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nLjcnLz48cGF0aCBkPSdNMCA2MDAgTDIwMC4wIDI3MC4wIEwzMzYuMCA0MjAuMCBMNTIwLjAgMTgwLjAgTDgwMCA0NTAuMCBMODAwIDYwMFonIGZpbGw9J2hzbCgzOSwzNSUsMzglKScvPjxwYXRoIGQ9J00wIDYwMCBMMjQwLjAgMzkwLjAgTDQ0MC4wMDAwMDAwMDAwMDAwNiA1MTAuMCBMNjQwLjAgMzYwLjAgTDgwMCA1NDAuMCBMODAwIDYwMFonIGZpbGw9J2hzbCgzOSw0MCUsMjQlKScvPjwvc3ZnPg==' },
+  { id: 'ev2', titulo: 'Nocturna Luna Llena', fecha: proxSabado(7), hora: '18:00', punto: 'Mirador Norte', dist: 6, dif: 'Básico', desc: 'Caminata nocturna corta. Llevar linterna frontal.', foto: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA4MDAgNjAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzAnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9J2hzbCgxNjcsNDUlLDcyJSknLz48c3RvcCBvZmZzZXQ9JzEnIHN0b3AtY29sb3I9J2hzbCgxNjcsNDAlLDkwJSknLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0nODAwJyBoZWlnaHQ9JzYwMCcgZmlsbD0ndXJsKCNnKScvPjxjaXJjbGUgY3g9JzY0MC4wJyBjeT0nMTMyLjAnIHI9JzQyLjAwMDAwMDAwMDAwMDAxJyBmaWxsPScjZmZmJyBvcGFjaXR5PScuNycvPjxwYXRoIGQ9J00wIDYwMCBMMjAwLjAgMjcwLjAgTDMzNi4wIDQyMC4wIEw1MjAuMCAxODAuMCBMODAwIDQ1MC4wIEw4MDAgNjAwWicgZmlsbD0naHNsKDE2NywzNSUsMzglKScvPjxwYXRoIGQ9J00wIDYwMCBMMjQwLjAgMzkwLjAgTDQ0MC4wMDAwMDAwMDAwMDAwNiA1MTAuMCBMNjQwLjAgMzYwLjAgTDgwMCA1NDAuMCBMODAwIDYwMFonIGZpbGw9J2hzbCgxNjcsNDAlLDI0JSknLz48L3N2Zz4=' },
+  { id: 'ev3', titulo: 'Páramo Alto + Siembra', fecha: proxSabado(14), hora: '05:30', punto: 'Terminal Sur', dist: 15, dif: 'Avanzado', desc: 'Exigente, incluye jornada de siembra. Solo con inscripción previa.', foto: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA4MDAgNjAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzAnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9J2hzbCg1Niw0NSUsNzIlKScvPjxzdG9wIG9mZnNldD0nMScgc3RvcC1jb2xvcj0naHNsKDU2LDQwJSw5MCUpJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzgwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9J3VybCgjZyknLz48Y2lyY2xlIGN4PSc2NDAuMCcgY3k9JzEzMi4wJyByPSc0Mi4wMDAwMDAwMDAwMDAwMScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nLjcnLz48cGF0aCBkPSdNMCA2MDAgTDIwMC4wIDI3MC4wIEwzMzYuMCA0MjAuMCBMNTIwLjAgMTgwLjAgTDgwMCA0NTAuMCBMODAwIDYwMFonIGZpbGw9J2hzbCg1NiwzNSUsMzglKScvPjxwYXRoIGQ9J00wIDYwMCBMMjQwLjAgMzkwLjAgTDQ0MC4wMDAwMDAwMDAwMDAwNiA1MTAuMCBMNjQwLjAgMzYwLjAgTDgwMCA1NDAuMCBMODAwIDYwMFonIGZpbGw9J2hzbCg1Niw0MCUsMjQlKScvPjwvc3ZnPg==' },
+  { id: 'ev4', titulo: 'Cascada La Chorrera', fecha: proxSabado(21), hora: '06:30', punto: 'Parque Central', dist: 9, dif: 'Básico', desc: 'Ideal para principiantes y familias.', foto: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA4MDAgNjAwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzAnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9J2hzbCgxOSw0NSUsNzIlKScvPjxzdG9wIG9mZnNldD0nMScgc3RvcC1jb2xvcj0naHNsKDE5LDQwJSw5MCUpJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzgwMCcgaGVpZ2h0PSc2MDAnIGZpbGw9J3VybCgjZyknLz48Y2lyY2xlIGN4PSc2NDAuMCcgY3k9JzEzMi4wJyByPSc0Mi4wMDAwMDAwMDAwMDAwMScgZmlsbD0nI2ZmZicgb3BhY2l0eT0nLjcnLz48cGF0aCBkPSdNMCA2MDAgTDIwMC4wIDI3MC4wIEwzMzYuMCA0MjAuMCBMNTIwLjAgMTgwLjAgTDgwMCA0NTAuMCBMODAwIDYwMFonIGZpbGw9J2hzbCgxOSwzNSUsMzglKScvPjxwYXRoIGQ9J00wIDYwMCBMMjQwLjAgMzkwLjAgTDQ0MC4wMDAwMDAwMDAwMDAwNiA1MTAuMCBMNjQwLjAgMzYwLjAgTDgwMCA1NDAuMCBMODAwIDYwMFonIGZpbGw9J2hzbCgxOSw0MCUsMjQlKScvPjwvc3ZnPg==' },
+];
+// Caminatas ya realizadas (se editan desde Administradores)
+const seedPasadas = [
+  { id: 'p7', titulo: 'Cerro Alto', fecha: '2026-09-19', dist: 11, foto: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2MDAgNDUwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzAnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9J2hzbCgzOSw0NSUsNzIlKScvPjxzdG9wIG9mZnNldD0nMScgc3RvcC1jb2xvcj0naHNsKDM5LDQwJSw5MCUpJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc0NTAnIGZpbGw9J3VybCgjZyknLz48Y2lyY2xlIGN4PSc0ODAuMCcgY3k9Jzk5LjAnIHI9JzMxLjUwMDAwMDAwMDAwMDAwNCcgZmlsbD0nI2ZmZicgb3BhY2l0eT0nLjcnLz48cGF0aCBkPSdNMCA0NTAgTDE1MC4wIDIwMi41IEwyNTIuMCAzMTUuMCBMMzkwLjAgMTM1LjAgTDYwMCAzMzcuNSBMNjAwIDQ1MFonIGZpbGw9J2hzbCgzOSwzNSUsMzglKScvPjxwYXRoIGQ9J00wIDQ1MCBMMTgwLjAgMjkyLjUgTDMzMC4wIDM4Mi41IEw0ODAuMCAyNzAuMCBMNjAwIDQwNS4wIEw2MDAgNDUwWicgZmlsbD0naHNsKDM5LDQwJSwyNCUpJy8+PC9zdmc+' },
+  { id: 'p1', titulo: 'Ruta del Bosque', fecha: '2026-08-15', dist: 8, foto: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2MDAgNDUwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzAnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9J2hzbCgzNDIsNDUlLDcyJSknLz48c3RvcCBvZmZzZXQ9JzEnIHN0b3AtY29sb3I9J2hzbCgzNDIsNDAlLDkwJSknLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0nNjAwJyBoZWlnaHQ9JzQ1MCcgZmlsbD0ndXJsKCNnKScvPjxjaXJjbGUgY3g9JzQ4MC4wJyBjeT0nOTkuMCcgcj0nMzEuNTAwMDAwMDAwMDAwMDA0JyBmaWxsPScjZmZmJyBvcGFjaXR5PScuNycvPjxwYXRoIGQ9J00wIDQ1MCBMMTUwLjAgMjAyLjUgTDI1Mi4wIDMxNS4wIEwzOTAuMCAxMzUuMCBMNjAwIDMzNy41IEw2MDAgNDUwWicgZmlsbD0naHNsKDM0MiwzNSUsMzglKScvPjxwYXRoIGQ9J00wIDQ1MCBMMTgwLjAgMjkyLjUgTDMzMC4wIDM4Mi41IEw0ODAuMCAyNzAuMCBMNjAwIDQwNS4wIEw2MDAgNDUwWicgZmlsbD0naHNsKDM0Miw0MCUsMjQlKScvPjwvc3ZnPg==' },
+  { id: 'p2', titulo: 'Cascada La Chorrera', fecha: '2026-07-18', dist: 9, foto: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2MDAgNDUwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzAnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9J2hzbCgxOSw0NSUsNzIlKScvPjxzdG9wIG9mZnNldD0nMScgc3RvcC1jb2xvcj0naHNsKDE5LDQwJSw5MCUpJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc0NTAnIGZpbGw9J3VybCgjZyknLz48Y2lyY2xlIGN4PSc0ODAuMCcgY3k9Jzk5LjAnIHI9JzMxLjUwMDAwMDAwMDAwMDAwNCcgZmlsbD0nI2ZmZicgb3BhY2l0eT0nLjcnLz48cGF0aCBkPSdNMCA0NTAgTDE1MC4wIDIwMi41IEwyNTIuMCAzMTUuMCBMMzkwLjAgMTM1LjAgTDYwMCAzMzcuNSBMNjAwIDQ1MFonIGZpbGw9J2hzbCgxOSwzNSUsMzglKScvPjxwYXRoIGQ9J00wIDQ1MCBMMTgwLjAgMjkyLjUgTDMzMC4wIDM4Mi41IEw0ODAuMCAyNzAuMCBMNjAwIDQwNS4wIEw2MDAgNDUwWicgZmlsbD0naHNsKDE5LDQwJSwyNCUpJy8+PC9zdmc+' },
+  { id: 'p3', titulo: 'Páramo Alto', fecha: '2026-06-20', dist: 15, foto: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2MDAgNDUwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzAnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9J2hzbCg1Niw0NSUsNzIlKScvPjxzdG9wIG9mZnNldD0nMScgc3RvcC1jb2xvcj0naHNsKDU2LDQwJSw5MCUpJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc0NTAnIGZpbGw9J3VybCgjZyknLz48Y2lyY2xlIGN4PSc0ODAuMCcgY3k9Jzk5LjAnIHI9JzMxLjUwMDAwMDAwMDAwMDAwNCcgZmlsbD0nI2ZmZicgb3BhY2l0eT0nLjcnLz48cGF0aCBkPSdNMCA0NTAgTDE1MC4wIDIwMi41IEwyNTIuMCAzMTUuMCBMMzkwLjAgMTM1LjAgTDYwMCAzMzcuNSBMNjAwIDQ1MFonIGZpbGw9J2hzbCg1NiwzNSUsMzglKScvPjxwYXRoIGQ9J00wIDQ1MCBMMTgwLjAgMjkyLjUgTDMzMC4wIDM4Mi41IEw0ODAuMCAyNzAuMCBMNjAwIDQwNS4wIEw2MDAgNDUwWicgZmlsbD0naHNsKDU2LDQwJSwyNCUpJy8+PC9zdmc+' },
+  { id: 'p4', titulo: 'Valle Verde', fecha: '2026-05-16', dist: 10, foto: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2MDAgNDUwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzAnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9J2hzbCg5Myw0NSUsNzIlKScvPjxzdG9wIG9mZnNldD0nMScgc3RvcC1jb2xvcj0naHNsKDkzLDQwJSw5MCUpJy8+PC9saW5lYXJHcmFkaWVudD48L2RlZnM+PHJlY3Qgd2lkdGg9JzYwMCcgaGVpZ2h0PSc0NTAnIGZpbGw9J3VybCgjZyknLz48Y2lyY2xlIGN4PSc0ODAuMCcgY3k9Jzk5LjAnIHI9JzMxLjUwMDAwMDAwMDAwMDAwNCcgZmlsbD0nI2ZmZicgb3BhY2l0eT0nLjcnLz48cGF0aCBkPSdNMCA0NTAgTDE1MC4wIDIwMi41IEwyNTIuMCAzMTUuMCBMMzkwLjAgMTM1LjAgTDYwMCAzMzcuNSBMNjAwIDQ1MFonIGZpbGw9J2hzbCg5MywzNSUsMzglKScvPjxwYXRoIGQ9J00wIDQ1MCBMMTgwLjAgMjkyLjUgTDMzMC4wIDM4Mi41IEw0ODAuMCAyNzAuMCBMNjAwIDQwNS4wIEw2MDAgNDUwWicgZmlsbD0naHNsKDkzLDQwJSwyNCUpJy8+PC9zdmc+' },
+  { id: 'p5', titulo: 'Mirador del Cóndor', fecha: '2026-04-18', dist: 7, foto: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2MDAgNDUwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzAnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9J2hzbCgxMzAsNDUlLDcyJSknLz48c3RvcCBvZmZzZXQ9JzEnIHN0b3AtY29sb3I9J2hzbCgxMzAsNDAlLDkwJSknLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0nNjAwJyBoZWlnaHQ9JzQ1MCcgZmlsbD0ndXJsKCNnKScvPjxjaXJjbGUgY3g9JzQ4MC4wJyBjeT0nOTkuMCcgcj0nMzEuNTAwMDAwMDAwMDAwMDA0JyBmaWxsPScjZmZmJyBvcGFjaXR5PScuNycvPjxwYXRoIGQ9J00wIDQ1MCBMMTUwLjAgMjAyLjUgTDI1Mi4wIDMxNS4wIEwzOTAuMCAxMzUuMCBMNjAwIDMzNy41IEw2MDAgNDUwWicgZmlsbD0naHNsKDEzMCwzNSUsMzglKScvPjxwYXRoIGQ9J00wIDQ1MCBMMTgwLjAgMjkyLjUgTDMzMC4wIDM4Mi41IEw0ODAuMCAyNzAuMCBMNjAwIDQwNS4wIEw2MDAgNDUwWicgZmlsbD0naHNsKDEzMCw0MCUsMjQlKScvPjwvc3ZnPg==' },
+  { id: 'p6', titulo: 'Nocturna Luna Llena', fecha: '2026-03-14', dist: 6, foto: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA2MDAgNDUwJz48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9J2cnIHgxPScwJyB5MT0nMCcgeDI9JzAnIHkyPScxJz48c3RvcCBvZmZzZXQ9JzAnIHN0b3AtY29sb3I9J2hzbCgxNjcsNDUlLDcyJSknLz48c3RvcCBvZmZzZXQ9JzEnIHN0b3AtY29sb3I9J2hzbCgxNjcsNDAlLDkwJSknLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0nNjAwJyBoZWlnaHQ9JzQ1MCcgZmlsbD0ndXJsKCNnKScvPjxjaXJjbGUgY3g9JzQ4MC4wJyBjeT0nOTkuMCcgcj0nMzEuNTAwMDAwMDAwMDAwMDA0JyBmaWxsPScjZmZmJyBvcGFjaXR5PScuNycvPjxwYXRoIGQ9J00wIDQ1MCBMMTUwLjAgMjAyLjUgTDI1Mi4wIDMxNS4wIEwzOTAuMCAxMzUuMCBMNjAwIDMzNy41IEw2MDAgNDUwWicgZmlsbD0naHNsKDE2NywzNSUsMzglKScvPjxwYXRoIGQ9J00wIDQ1MCBMMTgwLjAgMjkyLjUgTDMzMC4wIDM4Mi41IEw0ODAuMCAyNzAuMCBMNjAwIDQwNS4wIEw2MDAgNDUwWicgZmlsbD0naHNsKDE2Nyw0MCUsMjQlKScvPjwvc3ZnPg==' },
+];
+const eventosIniciales = () => [...seedPasadas.map(p => ({ hora: '06:00', punto: 'Parque Central', dif: 'Básico', desc: '', ...p })), ...seedEventos.map(e => ({ ...e }))];
+// Comentarios de ejemplo (ficticios: bórralos desde Administradores)
+const seedRelatos = [
+  { id: 'r1', caminataId: 'p7', autor: 'Laura M. (ejemplo)', texto: 'Mi primera caminata con el grupo 😍 pensé que no llegaba a la cima y entre todos nos animamos. ¡La vista valió cada paso!', fecha: '2026-09-20' },
+  { id: 'r2', caminataId: 'p2', autor: 'Camilo R. (ejemplo)', texto: 'Fui solo, sin conocer a nadie, y volví con diez amigos nuevos 🔥 La cascada es espectacular.', fecha: '2026-07-19' },
+];
+
+// Aviso dentro de la página (los aviso() del navegador pueden estar bloqueados)
+function aviso(msg) {
+  const t = document.createElement('div'); t.className = 'toast'; t.setAttribute('role', 'status'); t.textContent = msg;
+  document.body.appendChild(t); setTimeout(() => t.remove(), 4500);
+}
+// Botón de eliminar en dos pasos: primer clic arma, segundo clic confirma
+function dosPasos(btn, accion) {
+  if (btn.dataset.armado) { btn.textContent = btn.dataset.txt; btn.classList.remove('peligro'); delete btn.dataset.armado; accion(); return; }
+  btn.dataset.armado = '1'; btn.dataset.txt = btn.textContent; btn.textContent = '¿Seguro? Sí, eliminar'; btn.classList.add('peligro');
+  setTimeout(() => { if (btn.isConnected && btn.dataset.armado) { btn.textContent = btn.dataset.txt; btn.classList.remove('peligro'); delete btn.dataset.armado; } }, 4000);
+}
+function load(k, fb) { try { const v = JSON.parse(localStorage.getItem(k)); return Array.isArray(v) && v.length ? v : fb; } catch { return fb; } }
+function loadRelatos() { try { const raw = localStorage.getItem(LS_ST); if (raw === null) return [...seedRelatos]; const v = JSON.parse(raw); return Array.isArray(v) ? v : [...seedRelatos]; } catch { return [...seedRelatos]; } }
+function save(k, v) {
+  try { localStorage.setItem(k, JSON.stringify(v)); return true; }
+  catch { aviso('No se pudo guardar (almacenamiento lleno). Prueba con una imagen más liviana.'); return false; }
+}
+// Reduce una imagen subida para que ocupe poco espacio
+function reducirImagen(file, max = 900) {
+  return new Promise((ok, fail) => {
+    const fr = new FileReader();
+    fr.onerror = fail;
+    fr.onload = () => {
+      const im = new Image();
+      im.onerror = fail;
+      im.onload = () => {
+        const k = Math.min(1, max / Math.max(im.width, im.height));
+        const c = document.createElement('canvas');
+        c.width = Math.round(im.width * k); c.height = Math.round(im.height * k);
+        c.getContext('2d').drawImage(im, 0, 0, c.width, c.height);
+        ok(c.toDataURL('image/jpeg', 0.72));
+      };
+      im.src = fr.result;
+    };
+    fr.readAsDataURL(file);
+  });
+}
+
+let eventos = load(LS_EV, eventosIniciales());
+let asistencias = load(LS_AS, []);
+let relatos = loadRelatos();
+let reacciones = (() => { try { const v = JSON.parse(localStorage.getItem(LS_RE)); if (v && v.counts && Array.isArray(v.mias)) return v; } catch {} return { counts: {}, mias: [] }; })();
+let view = (() => { const d = new Date(); return { y: d.getFullYear(), m: d.getMonth() }; })();
+let popIds = [], popForm = false, popOk = false, selectedId = null;
+
+const $ = (id) => document.getElementById(id);
+const calGrid = $('cal-grid'), calTitle = $('cal-title'), calPop = $('cal-pop'), calTip = $('cal-tip');
+
+const km = ev => ev.dist ? `${ev.dist} km` : '';
+function extras(ev) {
+  const out = [];
+  if (ev.desn) out.push(`⛰️ Desnivel ${ev.desn} m`);
+  if (ev.dur) out.push(`⏱️ Duración aprox. ${ev.dur}`);
+  const a = ev.emin, b = ev.emax;
+  if (a != null && b != null) out.push(`👤 Edades: ${a} a ${b} años`);
+  else if (a != null) out.push(`👤 Desde ${a} años`);
+  else if (b != null) out.push(`👤 Hasta ${b} años`);
+  if (ev.masc === 'si') out.push('🐶 Mascotas permitidas');
+  else if (ev.masc === 'no') out.push('🐾 No se permiten mascotas');
+  return out;
+}
+function fmtFecha(f) { const [y, m, d] = f.split('-').map(Number); return new Date(y, m - 1, d).toLocaleDateString('es', { weekday: 'short', day: 'numeric', month: 'short', year: 'numeric' }); }
+function fmtMes(f) { const [y, m, d] = f.split('-').map(Number); return new Date(y, m - 1, d).toLocaleDateString('es', { day: 'numeric', month: 'long', year: 'numeric' }); }
+function conteoPorEvento(id) {
+  const regs = asistencias.filter(a => a.eventoId === id);
+  return { n: regs.length, personas: regs.reduce((s, a) => s + Number(a.num || 1), 0) };
+}
+const proximos = () => [...eventos].filter(e => e.fecha >= HOY).sort((a, b) => a.fecha.localeCompare(b.fecha));
+
+/* ---------- Menú y pestañas ---------- */
+(() => {
+  const pag = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.util-inner a:not(.brand-bar):not(.admin-btn)').forEach(l => { if (l.getAttribute('href') === pag) l.classList.add('activo'); });
+})();
+function abrirTab(n) {
+  document.querySelectorAll('.tabs [data-tab]').forEach(b => b.classList.toggle('on', b.dataset.tab === n));
+  document.querySelectorAll('[data-panel]').forEach(p => { p.hidden = p.dataset.panel !== n; });
+}
+(() => {
+  const t = document.querySelector('.tabs'); if (!t) return;
+  t.addEventListener('click', e => { const b = e.target.closest('[data-tab]'); if (b) abrirTab(b.dataset.tab); });
+  abrirTab('whatsapp');
+})();
+
+/* ---------- Calendario ---------- */
+function ocultarTip() { if (calTip) calTip.hidden = true; }
+function mostrarTip(celda, list) {
+  if (!calTip || popIds.length) return;
+  const card = calTip.parentElement;
+  calTip.innerHTML = list.map(ev => `<strong>${esc(ev.titulo)}</strong><br>📅 ${esc(fmtFecha(ev.fecha))}<br>⏰ ${esc(ev.hora)} · 📍 ${esc(ev.punto || '')}`).join('<hr>');
+  calTip.hidden = false;
+  const cr = card.getBoundingClientRect(), r = celda.getBoundingClientRect();
+  const w = calTip.offsetWidth, h = calTip.offsetHeight;
+  const x = Math.max(w / 2 + 8, Math.min(cr.width - w / 2 - 8, r.left - cr.left + r.width / 2));
+  const arriba = r.top - cr.top - h - 10 > 0;
+  calTip.style.left = x + 'px';
+  calTip.style.top = (arriba ? r.top - cr.top - h - 10 : r.bottom - cr.top + 10) + 'px';
+  calTip.style.transform = 'translateX(-50%)';
+}
+function cerrarPop() { popIds = []; popForm = false; popOk = false; renderCal(); renderEventos(); }
+function abrirForm(id) {
+  const ev = eventos.find(e => e.id === id); if (!ev) return;
+  const [y, m] = ev.fecha.split('-').map(Number); view = { y, m: m - 1 };
+  popIds = [id]; selectedId = id; popForm = true; popOk = false;
+  ocultarTip(); renderCal(); renderEventos();
+  irAlCalendario();
+  // En el celular no se enfoca el campo: abriría el teclado y movería la pantalla
+  if (window.matchMedia('(hover: hover) and (pointer: fine)').matches) { const inp = calPop && calPop.querySelector('input[name=nombre]'); if (inp) inp.focus({ preventScroll: true }); }
+}
+// Lleva la pantalla al calendario, justo debajo del menú, sin animación (así no se interrumpe en el celular)
+function irAlCalendario() {
+  const card = calPop && calPop.parentElement; if (!card) return;
+  const h = document.documentElement, prev = h.style.scrollBehavior;
+  h.style.scrollBehavior = 'auto';
+  window.scrollTo(0, Math.max(0, card.getBoundingClientRect().top + window.scrollY - 76));
+  h.style.scrollBehavior = prev;
+}
+
+function renderCal() {
+  if (!calGrid || !calTitle) return;
+  const meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+  calTitle.textContent = `${meses[view.m]} ${view.y}`;
+  calGrid.innerHTML = '';
+  const start = (new Date(view.y, view.m, 1).getDay() + 6) % 7;
+  const days = new Date(view.y, view.m + 1, 0).getDate();
+  for (let i = 0; i < start; i++) { const e = document.createElement('div'); e.className = 'empty'; calGrid.appendChild(e); }
+  const evByDay = {};
+  eventos.forEach(ev => { const [y, m, d] = ev.fecha.split('-').map(Number); if (y === view.y && m - 1 === view.m) (evByDay[d] = evByDay[d] || []).push(ev); });
+  for (let d = 1; d <= days; d++) {
+    const c = document.createElement('div');
+    c.textContent = d;
+    if (evByDay[d]) {
+      const list = evByDay[d];
+      c.className = 'has' + (list.every(e => e.fecha < HOY) ? ' past' : '');
+      const dot = document.createElement('span'); dot.className = 'dot'; c.appendChild(dot);
+      c.tabIndex = 0; c.setAttribute('role', 'button'); c.style.cursor = 'pointer';
+      c.setAttribute('aria-label', 'Ver caminata: ' + list.map(e => e.titulo).join(', '));
+      if (list.some(e => popIds.includes(e.id))) c.style.outline = '2px solid var(--green)';
+      c.onmouseenter = c.onfocus = () => mostrarTip(c, list);
+      c.onmouseleave = c.onblur = ocultarTip;
+      c.onclick = () => { ocultarTip(); popIds = list.map(e => e.id); popForm = false; popOk = false; selectedId = list[0].id; renderCal(); renderEventos(); };
+      c.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); c.onclick(); } };
+    }
+    calGrid.appendChild(c);
+  }
+}
+
+function formAsistencia(ev) {
+  return `<form class="form asis-form" data-evento="${esc(ev.id)}">
+    <h4 style="margin:0 0 4px;font-size:1.2rem">Confirmar asistencia</h4>
+    <p class="muted" style="margin:0 0 6px">${esc(ev.titulo)} · ${esc(fmtFecha(ev.fecha))} · ${esc(ev.hora)}</p>
+    <label>Nombre completo<input name="nombre" required minlength="3" maxlength="80" placeholder="Ej. Ana Pérez" /></label>
+    <div class="row">
+      <label>Teléfono / WhatsApp<input name="tel" type="tel" required placeholder="300 123 4567" /></label>
+      <label>Residencia<input name="resi" required maxlength="60" placeholder="Ej. Bogotá, Usaquén" /></label>
+    </div>
+    <div class="row">
+      <label>N.º de personas (incluyéndote)<input name="num" type="number" min="1" max="20" value="1" required /></label>
+      <label>Comentarios<input name="notas" maxlength="200" placeholder="Alergias, lesiones, nivel (opcional)" /></label>
+    </div>
+    <div class="actions"><button type="button" class="btn ghost" data-act="back">‹ Volver</button><button class="btn primary" type="submit" style="flex:1">Confirmar asistencia</button></div>
+  </form>`;
+}
+
+function renderEventos() {
+  if (calPop) {
+    const lista = popIds.map(id => eventos.find(e => e.id === id)).filter(Boolean);
+    calPop.hidden = !lista.length;
+    const cerrar = '<button class="pop-close" data-act="close" aria-label="Cerrar detalle">✕</button>';
+    let html = '';
+    if (lista.length && popOk) {
+      html = `<div class="pop-card">${cerrar}<h4 style="margin:0 0 8px;font-size:1.25rem">¡Registro guardado! ✅</h4><p>Gracias por confirmar tu asistencia a <strong>${esc(lista[0].titulo)}</strong>. Nos vemos en el punto de encuentro.</p><button class="btn small" data-act="close">Cerrar</button></div>`;
+    } else if (lista.length && popForm) {
+      html = `<div class="pop-card">${cerrar}${formAsistencia(lista[0])}</div>`;
+    } else if (lista.length) {
+      html = '<div class="pop-card">' + cerrar + lista.map(ev => {
+        const c = conteoPorEvento(ev.id), pasado = ev.fecha < HOY;
+        const principal = pasado ? `<a class="btn small" href="#post-${encodeURIComponent(ev.id)}">Ver publicación</a>` : `<button class="btn small" data-act="go" data-id="${esc(ev.id)}">Confirmar asistencia</button>`;
+        return `<div class="pop-ev">${ev.foto ? `<img class="pop-foto" src="${esc(ev.foto)}" alt="${esc(ev.titulo)}" />` : ''}
+          <h4>${esc(ev.titulo)} ${pasado ? '<span class="badge">Realizada</span>' : ''}</h4>
+          <div class="meta">📅 ${esc(fmtFecha(ev.fecha))} · ⏰ ${esc(ev.hora)}</div>
+          <div class="meta">📍 Punto de encuentro: ${esc(ev.punto || '')}</div>
+          ${[km(ev), ev.dif ? 'Dificultad ' + ev.dif : ''].filter(Boolean).length ? `<div class="meta">🥾 ${[km(ev), ev.dif ? 'Dificultad ' + ev.dif : ''].filter(Boolean).map(esc).join(' · ')}</div>` : ''}
+          ${extras(ev).map(t => `<div class="meta">${esc(t)}</div>`).join('')}
+          ${ev.desc ? `<p>${esc(ev.desc)}</p>` : ''}
+          <div class="meta">🎒 Lleva agua (2 L), bloqueador, gorra, calzado con agarre y chaqueta impermeable.</div>
+          ${HOJA ? '' : `<div class="meta" style="margin:8px 0">👥 ${c.personas} ${c.personas === 1 ? 'persona inscrita' : 'personas inscritas'}</div>`}
+          <div class="actions">${principal}</div></div>`;
+      }).join('') + '</div>';
+    }
+    calPop.innerHTML = html;
+    // El calendario crece lo necesario para que el detalle quepa completo, sin barra de desplazamiento
+    const card = calPop.parentElement; card.style.minHeight = '';
+    const pc = calPop.querySelector('.pop-card');
+    if (pc && !calPop.hidden) card.style.minHeight = (pc.scrollHeight + 44) + 'px';
+  }
+}
+
+function renderProximos() {
+  const box = $('proximos'); if (!box) return;
+  box.innerHTML = proximos().slice(0, 3).map(ev => {
+    const [y, m, d] = ev.fecha.split('-').map(Number);
+    const mes = new Date(y, m - 1, d).toLocaleDateString('es', { month: 'short' });
+    return `<div class="prox"><div class="prox-fecha"><strong>${d}</strong><span>${esc(mes)}</span></div>
+      <div class="prox-info"><strong>${esc(ev.titulo)}</strong><span class="muted">${[ev.hora, ev.punto, km(ev), ev.dif].filter(Boolean).map(esc).join(' · ')}</span></div>
+      <button class="btn small" data-act="go" data-id="${esc(ev.id)}">Confirmar</button></div>`;
+  }).join('') || '<p class="muted">Pronto publicaremos nuevas caminatas.</p>';
+}
+
+function alClicEvento(e) {
+  if (e.target === calPop) return cerrarPop();
+  const b = e.target.closest('button'); if (!b) return;
+  if (b.dataset.act === 'close') return cerrarPop();
+  if (b.dataset.act === 'back') { popForm = false; return renderEventos(); }
+  if (b.dataset.act === 'go') abrirForm(b.dataset.id);
+}
+if (calPop) calPop.addEventListener('click', alClicEvento);
+if ($('proximos')) $('proximos').addEventListener('click', alClicEvento);
+if ($('cta-confirmar')) $('cta-confirmar').addEventListener('click', () => { const p = proximos()[0]; if (p) abrirForm(p.id); else document.getElementById('calendario')?.scrollIntoView(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && popIds.length) cerrarPop(); });
+function enviarAHoja(ev, d) {
+  if (!HOJA) return Promise.resolve();
+  return fetch(SHEETS_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify({ eventoId: ev.id, evento: ev.titulo, fecha: ev.fecha, nombre: d.nombre, tel: d.tel, resi: d.residencia, num: d.num, notas: d.notas }) });
+}
+if (calPop) calPop.addEventListener('submit', async e => {
+  e.preventDefault();
+  const f = e.target, ev = eventos.find(x => x.id === f.dataset.evento); if (!ev) return;
+  const d = { nombre: f.elements.nombre.value.trim(), tel: f.elements.tel.value.trim(), residencia: f.elements.resi.value.trim(), num: Number(f.elements.num.value) || 1, notas: f.elements.notas.value.trim() };
+  const btn = f.querySelector('[type=submit]'); btn.disabled = true; btn.textContent = 'Enviando…';
+  const volver = () => { btn.disabled = false; btn.textContent = 'Confirmar asistencia'; };
+  try { await enviarAHoja(ev, d); } catch { aviso('No se pudo enviar tu inscripción. Revisa tu internet e inténtalo de nuevo.'); return volver(); }
+  asistencias.push({ id: 'as' + Date.now(), eventoId: ev.id, ...d, pago: 'Pendiente', valor: 0, fecha: new Date().toISOString() });
+  if (!save(LS_AS, asistencias)) { asistencias.pop(); return volver(); }
+  popForm = false; popOk = true; renderEventos();
+});
+if ($('cal-prev')) $('cal-prev').onclick = () => { view.m--; if (view.m < 0) { view.m = 11; view.y--; } cerrarPop(); };
+if ($('cal-next')) $('cal-next').onclick = () => { view.m++; if (view.m > 11) { view.m = 0; view.y++; } cerrarPop(); };
+
+/* ---------- Experiencias: publicaciones con reacciones y comentarios ---------- */
+// Cuando una caminata llega a su fecha pasa sola a Experiencias; se edita desde Administradores
+function pasadas() {
+  return eventos.filter(e => e.fecha < HOY).map(e => ({
+    id: e.id, titulo: e.titulo, fecha: e.fecha, dist: e.dist,
+    foto: e.foto || phSvg(e.id),
+  })).sort((a, b) => b.fecha.localeCompare(a.fecha));
+}
+const EMOJIS = ['👏', '❤️', '🔥', '🥾', '😮'];
+const RAPIDOS = ['😀', '😍', '👏', '🔥', '🥾', '⛰️', '💚'];
+function renderRelatos() {
+  const box = $('relatos'); if (!box) return;
+  const q = ($('buscar') ? $('buscar').value : '').trim().toLowerCase();
+  const nombre = (() => { try { return localStorage.getItem('senderismo_nombre') || ''; } catch { return ''; } })();
+  const lista = pasadas().filter(p => !q || [p.titulo, fmtMes(p.fecha), ...relatos.filter(r => r.caminataId === p.id).flatMap(r => [r.autor, r.texto])].join(' ').toLowerCase().includes(q));
+  box.innerHTML = lista.map(p => {
+    const rx = reacciones.counts[p.id] || {};
+    const botones = EMOJIS.map(e => `<button class="rx${reacciones.mias.includes(p.id + '|' + e) ? ' on' : ''}" data-rx="${esc(p.id)}|${e}" aria-label="Reaccionar con ${e}">${e} <span>${rx[e] || 0}</span></button>`).join('');
+    const coms = relatos.filter(r => r.caminataId === p.id).map(r => `<div class="com"><strong>${esc(r.autor)}</strong><span>${esc(r.texto)}</span></div>`).join('') || '<p class="muted" style="margin:6px 0">Sé el primero en comentar.</p>';
+    const meta = [fmtMes(p.fecha), km(p) ? esc(km(p)) : ''].filter(Boolean).join(' · ');
+    return `<article class="card past" id="post-${esc(p.id)}">
+      <img class="cover" src="${esc(p.foto)}" alt="${esc(p.titulo)}" loading="lazy" />
+      <div class="body"><h4>${esc(p.titulo)}</h4><div class="meta muted">${meta}</div>
+        <div class="rxbar">${botones}</div>
+        <div class="coms">${coms}</div>
+        <form class="com-form" data-post="${esc(p.id)}">
+          <input name="autor" placeholder="Tu nombre" required maxlength="40" value="${esc(nombre)}" />
+          <div class="emo">${RAPIDOS.map(e => `<button type="button" class="emo-btn" data-emo="${e}" aria-label="Agregar ${e}">${e}</button>`).join('')}</div>
+          <div class="com-row"><input name="texto" placeholder="Escribe un comentario…" required maxlength="300" /><button class="btn small" type="submit">Comentar</button></div>
+        </form></div></article>`;
+  }).join('') || '<p class="muted">No encontramos publicaciones con esa búsqueda.</p>';
+}
+if ($('buscar')) $('buscar').addEventListener('input', renderRelatos);
+if ($('relatos')) {
+  $('relatos').addEventListener('click', e => {
+    const em = e.target.closest('[data-emo]');
+    if (em) { const inp = em.closest('form').elements.texto; inp.value += em.dataset.emo; inp.focus(); return; }
+    const rx = e.target.closest('[data-rx]'); if (!rx) return;
+    const [pid, emo] = rx.dataset.rx.split('|'), k = pid + '|' + emo;
+    const c = reacciones.counts[pid] = reacciones.counts[pid] || {};
+    const i = reacciones.mias.indexOf(k);
+    if (i >= 0) { reacciones.mias.splice(i, 1); c[emo] = Math.max(0, (c[emo] || 0) - 1); }
+    else { reacciones.mias.push(k); c[emo] = (c[emo] || 0) + 1; }
+    save(LS_RE, reacciones); renderRelatos();
+  });
+  $('relatos').addEventListener('submit', e => {
+    e.preventDefault();
+    const f = e.target, autor = f.elements.autor.value.trim(), texto = f.elements.texto.value.trim();
+    if (!autor || !texto) return;
+    try { localStorage.setItem('senderismo_nombre', autor); } catch {}
+    relatos.push({ id: 'r' + Date.now(), caminataId: f.dataset.post, autor, texto, fecha: iso(new Date()) });
+    save(LS_ST, relatos); renderRelatos();
+  });
+}
+
+function refresh() { renderCal(); renderEventos(); renderProximos(); renderRelatos(); if (window.renderCarrusel) window.renderCarrusel(); }
+refresh();
+if (location.hash.startsWith('#post-')) document.getElementById(location.hash.slice(1))?.scrollIntoView();
+
+/* ---------- Carrusel: usa las imágenes de los próximos eventos ---------- */
+(() => {
+  const box = $('hero-carousel'); if (!box) return;
+  const track = box.querySelector('.slides'), dotsBox = $('car-dots'); if (!track || !dotsBox) return;
+  let i = 0, timer, slides = [], dots = [], firma = '';
+  function lista() {
+    const up = proximos().filter(e => e.foto);
+    return up.length ? up : [...eventos].filter(e => e.foto && e.fecha < HOY).sort((a, b) => b.fecha.localeCompare(a.fecha)).slice(0, 7);
+  }
+  function go(k, manual) {
+    if (!slides.length) return;
+    i = (k + slides.length) % slides.length;
+    track.style.transform = `translateX(-${i * 100}%)`;
+    dots.forEach((d, j) => d.classList.toggle('on', j === i));
+    if (manual) restart();
+  }
+  function restart() { clearInterval(timer); timer = setInterval(() => go(i + 1), 5000); }
+  function build() {
+    const ls = lista();
+    const f = JSON.stringify(ls.map(e => [e.id, e.titulo, e.fecha, (e.foto || '').length]));
+    if (f === firma) return; firma = f;
+    box.style.display = ls.length ? '' : 'none';
+    track.innerHTML = ls.map((e, k) => `<figure class="slide"><img src="${esc(e.foto)}" alt="${esc(e.titulo)}" /><figcaption>${k + 1}/${ls.length} · ${esc(e.titulo)} · ${esc(fmtFecha(e.fecha))}</figcaption></figure>`).join('');
+    slides = [...track.children];
+    dotsBox.innerHTML = '';
+    dots = slides.map((_, k) => { const d = document.createElement('button'); d.setAttribute('aria-label', 'Ir a foto ' + (k + 1)); d.onclick = () => go(k, true); dotsBox.appendChild(d); return d; });
+    go(0); restart();
+  }
+  window.renderCarrusel = build;
+  if ($('car-prev')) $('car-prev').onclick = () => go(i - 1, true);
+  if ($('car-next')) $('car-next').onclick = () => go(i + 1, true);
+  let x0 = null;
+  box.addEventListener('touchstart', e => x0 = e.touches[0].clientX, { passive: true });
+  box.addEventListener('touchend', e => { if (x0 === null) return; const dx = e.changedTouches[0].clientX - x0; if (Math.abs(dx) > 40) go(i + (dx < 0 ? 1 : -1), true); x0 = null; });
+  let mx0 = null;
+  track.addEventListener('mousedown', e => mx0 = e.clientX);
+  window.addEventListener('mouseup', e => { if (mx0 === null) return; const dx = e.clientX - mx0; if (Math.abs(dx) > 40) go(i + (dx < 0 ? 1 : -1), true); mx0 = null; });
+  build();
+
+  // Flotante: al bajar de la página, el carrusel queda fijo en una esquina
+  const slot = $('car-slot'), minBtn = $('car-min');
+  if (slot) {
+    slot.style.height = box.offsetHeight + 'px';
+    const io = new IntersectionObserver(([en]) => {
+      const fuera = !en.isIntersecting && en.boundingClientRect.bottom < 0;
+      box.classList.toggle('flotante', fuera);
+      if (!fuera) box.classList.remove('min');
+      if (minBtn) minBtn.textContent = box.classList.contains('min') ? '🖼️' : '–';
+    }, { threshold: 0 });
+    io.observe(slot);
+    if (minBtn) minBtn.onclick = () => {
+      const m = box.classList.toggle('min');
+      minBtn.textContent = m ? '🖼️' : '–';
+      minBtn.setAttribute('aria-label', m ? 'Mostrar fotos' : 'Minimizar fotos');
+    };
+  }
+})();
+
+/* ---------- Dreamy Bot: asistente de preguntas frecuentes ---------- */
+(() => {
+  if (document.title.startsWith('Administradores')) return;
+  const norm = s => s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  const raiz = document.createElement('div');
+  raiz.className = 'bot';
+  raiz.innerHTML = `<section class="bot-panel" role="dialog" aria-label="Dreamy Bot, asistente de ayuda" hidden>
+      <header><span>🤖 Dreamy Bot</span><button type="button" class="bot-x" aria-label="Cerrar chat">✕</button></header>
+      <div class="bot-msgs" aria-live="polite"></div>
+      <div class="bot-chips"></div>
+      <form class="bot-form"><input name="q" placeholder="Escribe tu pregunta…" maxlength="200" autocomplete="off" aria-label="Tu pregunta" /><button class="btn small" type="submit">Enviar</button></form>
+    </section>
+    <button type="button" class="bot-fab" aria-label="Abrir chat de ayuda" aria-expanded="false">💬</button>`;
+  document.body.appendChild(raiz);
+  const panel = raiz.querySelector('.bot-panel'), msgs = raiz.querySelector('.bot-msgs'), chipsBox = raiz.querySelector('.bot-chips');
+  const form = raiz.querySelector('.bot-form'), fab = raiz.querySelector('.bot-fab');
+  let saludado = false;
+
+  function msg(html, who) {
+    const d = document.createElement('div'); d.className = 'm m-' + (who || 'bot');
+    if (who === 'user') d.textContent = html; else d.innerHTML = html;
+    msgs.appendChild(d); msgs.scrollTop = msgs.scrollHeight;
+  }
+  function chips(list) {
+    chipsBox.innerHTML = '';
+    list.forEach(c => { const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = c.t; b.onclick = () => c.fn ? c.fn() : preguntar(c.q || c.t); chipsBox.appendChild(b); });
+  }
+  const BASE = [{ t: 'Próxima caminata', q: 'próxima caminata' }, { t: '¿Cómo me inscribo?', q: 'cómo me inscribo' }, { t: '¿Qué debo llevar?', q: 'qué debo llevar' }, { t: 'Punto de encuentro', q: 'punto de encuentro' }, { t: 'Contacto', q: 'contacto' }];
+  const cerrar = () => { panel.hidden = true; fab.setAttribute('aria-expanded', 'false'); };
+
+  function irCalendario(id) {
+    cerrar();
+    if (calPop && calPop.offsetParent !== null) { if (id) abrirForm(id); else document.getElementById('calendario')?.scrollIntoView({ behavior: 'smooth' }); return; }
+    if (document.querySelector('[data-view]')) { location.hash = 'calendario'; if (id) setTimeout(() => abrirForm(id), 350); return; }
+    location.href = 'index.html#calendario';
+  }
+  function irPagina(n) { cerrar(); if (document.querySelector('[data-view]')) location.hash = n; else location.href = n + '.html'; }
+
+  function responder(t) {
+    const q = norm(t), has = re => re.test(q);
+    const prox = proximos().slice(0, 3);
+    if (has(/^(hola|buenas|buenos|hey|saludos|que tal)/)) return { html: '¡Hola! 👋 Soy el asistente automático de Dreamy Runners. Puedo contarte sobre las próximas caminatas, cómo inscribirte y qué llevar.' };
+    if (has(/gracias|chao|adios|hasta luego/)) return { html: '¡Con gusto! Nos vemos en el sendero 🥾' };
+    if (has(/inscrib|registr|confirm|anotar|apunt|cupo|reserv|asistencia|participar|unirme|como voy/)) return { html: 'Es muy fácil:<ol><li>Ve al <strong>Calendario</strong> o a <strong>Próximos eventos</strong>.</li><li>Elige la caminata y pulsa <strong>Confirmar asistencia</strong>.</li><li>Llena tu nombre, teléfono, residencia y número de personas.</li></ol>No necesitas estar en el grupo de WhatsApp y no hay límite de cupos.', chips: [{ t: 'Ir al calendario', fn: () => irCalendario() }, ...BASE.slice(0, 3)] };
+    if (has(/precio|costo|cuesta|cobr|pago|pagar|valor|cuanto|gratis/)) return { html: 'El valor de cada caminata se informa en su comunicado del grupo de WhatsApp. Para saber el valor exacto, <a href="https://wa.me/573000000000?text=Hola%20quiero%20saber%20el%20valor%20de%20las%20caminatas" target="_blank" rel="noopener">escríbenos por WhatsApp</a>.' };
+    if (has(/llevar|equipo|ropa|mochila|agua|calzado|zapato|bloqueador|impermeable|necesito|recomend|alimento|comida|linterna/)) return { html: 'Te recomendamos llevar:<ul><li>Agua (2 L)</li><li>Bloqueador y gorra</li><li>Calzado con agarre</li><li>Chaqueta impermeable</li><li>Refrigerio</li></ul>En las nocturnas, además, linterna frontal. Y avísanos si tienes alguna condición médica.' };
+    if (has(/punto|encuentro|donde|lugar|ubic|salimos|parque|llegar|hora de salida/)) {
+      const e = prox[0];
+      return { html: 'El punto de encuentro habitual es el <strong>Parque Central a las 6:00 a.m.</strong>' + (e ? `<br><br>La próxima caminata (<strong>${esc(e.titulo)}</strong>) sale de <strong>${esc(e.punto || 'Parque Central')}</strong> a las <strong>${esc(e.hora)}</strong>.` : '') };
+    }
+    if (has(/nivel|dificil|facil|principiante|basico|intermedio|avanzado|nino|familia|edad|experiencia previa|condicion|fisic/)) return { html: 'Tenemos rutas de tres niveles: <strong>Básico</strong>, <strong>Intermedio</strong> y <strong>Avanzado</strong>. La dificultad aparece en el detalle de cada caminata; si estás empezando, elige una básica. Si tienes dudas, escríbenos.' };
+    if (has(/emergenc|seguridad|guia|lesion|accidente|boti|medic|alergi|123/)) return { html: 'Cada salida tiene guías y botiquín, y llevamos conteo de asistentes.<br>🚨 Emergencia en ruta: <strong>123</strong> · Guía líder: <strong>300 000 0000</strong>.<br>Avísanos antes si tienes alguna lesión, alergia o condición médica.' };
+    if (has(/whatsapp|contact|telefono|celular|correo|email|mail|instagram|facebook|tiktok|redes|escribir|llamar/)) return { html: '💬 <a href="https://wa.me/573000000000" target="_blank" rel="noopener">WhatsApp +57 300 000 0000</a><br>✉️ <a href="mailto:hola@senderovivo.org">hola@senderovivo.org</a><br>Instagram, Facebook y TikTok están en <strong>Redes sociales</strong>.', chips: [{ t: 'Ir a Redes sociales', fn: () => irPagina('contacto') }, ...BASE.slice(0, 3)] };
+    if (has(/foto|galeria|comentar|reaccion|experiencias|anteriores|pasad|resena/)) return { html: 'En <strong>Experiencias</strong> están las caminatas anteriores. Puedes reaccionar con emojis, comentar y buscar por nombre o fecha.', chips: [{ t: 'Ir a Experiencias', fn: () => irPagina('experiencias') }, ...BASE.slice(0, 3)] };
+    if (has(/quienes|grupo|comunidad|dreamy|nosotros|mision|vision|que es/)) return { html: 'Somos <strong>Dreamy Runners</strong>, una comunidad de más de 600 personas que promueve un senderismo seguro, inclusivo y respetuoso con la naturaleza.', chips: [{ t: 'Conocer más', fn: () => irPagina('nosotros') }, ...BASE.slice(0, 3)] };
+    if (has(/proxim|siguiente|cuando|fecha|calendario|evento|caminata|ruta|salida|programad|hay /)) {
+      if (!prox.length) return { html: 'Por ahora no hay caminatas programadas. ¡Pronto publicaremos nuevas! 🥾' };
+      return { html: 'Estas son las próximas caminatas:<ul>' + prox.map(e => `<li><strong>${esc(e.titulo)}</strong><br>📅 ${esc(fmtFecha(e.fecha))} · ⏰ ${esc(e.hora)}<br>📍 ${esc(e.punto || '')}${km(e) ? ' · 🥾 ' + esc(km(e)) : ''}${e.dif ? ' · ' + esc(e.dif) : ''}</li>`).join('') + '</ul>', chips: [...prox.map(e => ({ t: 'Confirmar: ' + e.titulo, fn: () => irCalendario(e.id) })), { t: '¿Qué debo llevar?', q: 'qué debo llevar' }] };
+    }
+    return { html: 'No estoy seguro de eso 🤔 Prueba con una de estas opciones o <a href="https://wa.me/573000000000" target="_blank" rel="noopener">escríbenos por WhatsApp</a>.' };
+  }
+  function preguntar(t) {
+    msg(t, 'user');
+    setTimeout(() => { const r = responder(t); msg(r.html); chips(r.chips || BASE); }, 250);
+  }
+
+  fab.onclick = () => {
+    const abrir = panel.hidden;
+    panel.hidden = !abrir; fab.setAttribute('aria-expanded', abrir);
+    if (abrir) {
+      if (!saludado) { saludado = true; msg('¡Hola! 👋 Soy <strong>Dreamy Bot</strong>, el asistente automático de Dreamy Runners. ¿En qué te puedo ayudar?'); chips(BASE); }
+      form.elements.q.focus();
+    }
+  };
+  raiz.querySelector('.bot-x').onclick = cerrar;
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !panel.hidden) { cerrar(); fab.focus(); } });
+  form.addEventListener('submit', e => { e.preventDefault(); const t = form.elements.q.value.trim(); if (!t) return; form.reset(); preguntar(t); });
+})();
+
+/* Apartados: cada opción del menú muestra solo su sección */
+(() => {
+  const mapa = { inicio: 'inicio', calendario: 'inicio', experiencias: 'experiencias', galeria: 'experiencias', contar: 'experiencias', nosotros: 'nosotros', contacto: 'contacto', asistencia: 'contacto', admin: 'admin', todo: 'todo' };
+  const vistas = ['inicio', 'experiencias', 'nosotros', 'contacto', 'admin', 'todo'];
+  function ruta() {
+    const h = location.hash.slice(1) || 'inicio';
+    const v = h.startsWith('post-') ? 'experiencias' : (mapa[h] || 'inicio');
+    document.querySelectorAll('[data-view]').forEach(s => { s.hidden = v === 'todo' ? s.dataset.view === 'admin' : s.dataset.view !== v; });
+    document.querySelectorAll('.util-inner a:not(.brand-bar):not(.admin-btn)').forEach(l => l.classList.toggle('activo', l.getAttribute('href') === '#' + v));
+    const el = document.getElementById(h);
+    if (el && !vistas.includes(h)) el.scrollIntoView(); else window.scrollTo(0, 0);
+  }
+  window.addEventListener('hashchange', ruta);
+  ruta();
+})();
+
+
+(() => {
+  const U = 'admin', P = 'sendero123';
+  const on = () => { try { return sessionStorage.getItem('adm') === '1'; } catch { return false; } };
+  const box = $('login-box'), panel = $('admin-box'), modal = $('modal');
+  let foto = '';
+
+  function show() {
+    const o = on();
+    box.hidden = o; panel.hidden = !o;
+    if (o) { $('adm-name').textContent = sessionStorage.getItem('adm-user') || U; renderAdmin(); }
+  }
+  function renderAdmin() {
+    const evs = [...eventos].sort((a, b) => b.fecha.localeCompare(a.fecha));
+    $('adm-eventos').innerHTML = evs.map(ev => {
+      const c = conteoPorEvento(ev.id);
+      return `<div class="card adm-ev">${ev.foto ? `<img class="adm-th" src="${esc(ev.foto)}" alt="" />` : ''}
+        <div style="flex:1;min-width:200px"><strong>${esc(ev.titulo)}</strong> ${ev.fecha < HOY ? '<span class="badge">Realizada</span>' : ''}<br><span class="muted">${esc(fmtFecha(ev.fecha))} · ${esc(ev.hora)} · ${esc(ev.punto || '')} · ${c.personas} inscritos</span></div>
+        <div class="adm-btns">${HOJA && SHEETS_VER ? `<a class="btn small" href="${esc(SHEETS_VER)}" target="_blank" rel="noopener">📊 Abrir hoja de inscritos</a>` : `<button class="btn small" data-xls="${esc(ev.id)}">⬇ Descargar Excel</button>`} <button class="btn small ghost" data-edit="${esc(ev.id)}">Editar</button> <button class="btn small ghost" data-del="${esc(ev.id)}">Eliminar</button></div></div>`;
+    }).join('') || '<p class="muted">No hay eventos. Crea el primero con “+ Nuevo evento”.</p>';
+    $('adm-relatos').innerHTML = relatos.map(r => `<div class="card adm-ev"><div><strong>${esc(r.autor)}</strong><br><span class="muted">${esc(r.texto.slice(0, 120))}${r.texto.length > 120 ? '…' : ''}</span></div><button class="btn small ghost" data-delrel="${esc(r.id)}">Eliminar</button></div>`).join('') || '<p class="muted">Aún no hay comentarios.</p>';
+  }
+  const cambio = () => { renderAdmin(); if (typeof refresh === 'function') refresh(); };
+
+  $('form-login').addEventListener('submit', e => {
+    e.preventDefault();
+    if ($('adm-user').value.trim() === U && $('adm-pass').value === P) { sessionStorage.setItem('adm', '1'); sessionStorage.setItem('adm-user', U); $('login-err').hidden = true; show(); }
+    else $('login-err').hidden = false;
+  });
+  $('btn-salir').onclick = () => { sessionStorage.removeItem('adm'); show(); };
+
+  function previa() { $('ev-prev').innerHTML = foto ? `<img src="${esc(foto)}" alt="Vista previa" /><button type="button" class="btn small ghost" id="ev-quitar">Quitar imagen</button>` : '<span class="muted">Sin imagen</span>'; }
+  function abrir(ev) {
+    $('modal-title').textContent = ev ? 'Editar evento' : 'Nuevo evento';
+    $('ev-id').value = ev?.id || '';
+    $('ev-titulo').value = ev?.titulo || '';
+    $('ev-fecha').value = ev?.fecha || HOY;
+    $('ev-hora').value = ev?.hora || '06:00';
+    $('ev-punto').value = ev?.punto || '';
+    $('ev-dist').value = ev?.dist ?? '';
+    $('ev-dif').value = ev?.dif || '';
+    $('ev-desn').value = ev?.desn ?? '';
+    $('ev-dur').value = ev?.dur || '';
+    $('ev-emin').value = ev?.emin ?? '';
+    $('ev-emax').value = ev?.emax ?? '';
+    $('ev-masc').value = ev?.masc || '';
+    $('ev-desc').value = ev?.desc || '';
+    $('ev-foto').value = ''; foto = ev?.foto || ''; previa();
+    modal.hidden = false;
+  }
+  $('ev-foto').addEventListener('change', async e => {
+    const f = e.target.files[0]; if (!f) return;
+    if (!f.type.startsWith('image/')) return aviso('Sube una imagen (JPG o PNG).');
+    try { foto = await reducirImagen(f, 900); previa(); } catch { aviso('No se pudo leer la imagen.'); }
+  });
+  $('ev-prev').addEventListener('click', e => { if (e.target.id === 'ev-quitar') { foto = ''; $('ev-foto').value = ''; previa(); } });
+  $('btn-nuevo').onclick = () => abrir(null);
+  $('modal-cancel').onclick = () => modal.hidden = true;
+  modal.addEventListener('click', e => { if (e.target === modal) modal.hidden = true; });
+  $('form-evento').addEventListener('submit', e => {
+    e.preventDefault();
+    const id = $('ev-id').value || 'ev' + Date.now();
+    const num = id2 => $(id2).value !== '' ? Number($(id2).value) : null;
+    const emin = num('ev-emin'), emax = num('ev-emax');
+    if (emin != null && emax != null && emin > emax) return aviso('La edad mínima no puede ser mayor que la máxima.');
+    const obj = { id, titulo: $('ev-titulo').value.trim(), fecha: $('ev-fecha').value, hora: $('ev-hora').value, punto: $('ev-punto').value.trim(), dist: num('ev-dist'), dif: $('ev-dif').value, desn: num('ev-desn'), dur: $('ev-dur').value.trim(), emin, emax, masc: $('ev-masc').value, desc: $('ev-desc').value.trim(), foto };
+    const i = eventos.findIndex(x => x.id === id);
+    if (i >= 0) eventos[i] = obj; else eventos.push(obj);
+    if (!save(LS_EV, eventos)) return;
+    modal.hidden = true; cambio();
+  });
+
+  // Excel de inscritos de un evento (con colores)
+  async function exportar(id) {
+    const ev = eventos.find(x => x.id === id); if (!ev) return;
+    if (!window.ExcelJS) return aviso('No se pudo cargar el generador de Excel. Revisa tu conexión a internet e inténtalo de nuevo.');
+    try {
+      const AZUL = 'FF1852AD', OSCURO = 'FF173A6D', PASTEL = 'FFEAF1FB', BORDE = 'FFC9D8EC';
+      const HEAD = ['POSICIÓN O N°', 'NOMBRE DE LA PERSONA', 'RESIDENCIA', 'NÚMERO DE CELULAR', 'ESTATUS DE PAGO', 'PAGO ACTUAL'];
+      const wb = new ExcelJS.Workbook();
+      const ws = wb.addWorksheet('Inscritos', { views: [{ state: 'frozen', ySplit: 2 }] });
+      [14, 36, 24, 20, 18, 18].forEach((w, i) => { ws.getColumn(i + 1).width = w; });
+      const solido = argb => ({ type: 'pattern', pattern: 'solid', fgColor: { argb } });
+      const borde = { style: 'thin', color: { argb: BORDE } };
+      ws.mergeCells('A1:F1');
+      const t = ws.getCell('A1');
+      t.value = 'Dreamy Runners · ' + ev.titulo + ' · ' + ev.fecha;
+      t.font = { bold: true, size: 14, color: { argb: 'FFFFFFFF' } }; t.fill = solido(OSCURO); t.alignment = { vertical: 'middle', horizontal: 'left', indent: 1 };
+      ws.getRow(1).height = 30;
+      const h = ws.getRow(2); h.values = HEAD; h.height = 24;
+      h.eachCell(c => { c.font = { bold: true, color: { argb: 'FFFFFFFF' } }; c.fill = solido(AZUL); c.alignment = { vertical: 'middle', horizontal: 'center', wrapText: true }; c.border = { top: borde, left: borde, bottom: borde, right: borde }; });
+      const regs = asistencias.filter(a => a.eventoId === id);
+      regs.forEach((a, i) => {
+        const r = ws.addRow([i + 1, a.nombre + (a.num > 1 ? ' (+' + (a.num - 1) + ' acompañantes)' : ''), a.residencia || '', a.tel, a.pago || 'Pendiente', Number(a.valor) || 0]);
+        r.eachCell({ includeEmpty: true }, (c, col) => {
+          c.border = { top: borde, left: borde, bottom: borde, right: borde };
+          if (i % 2 === 1) c.fill = solido(PASTEL);
+          c.alignment = { vertical: 'middle', horizontal: (col === 1 || col === 5) ? 'center' : (col === 6 ? 'right' : 'left') };
+        });
+        r.getCell(6).numFmt = '"$"#,##0';
+      });
+      // lista desplegable y color automático en ESTATUS DE PAGO
+      const fin = 2 + Math.max(regs.length, 1) + 60;
+      for (let r = 3; r <= fin; r++) ws.getCell('E' + r).dataValidation = { type: 'list', allowBlank: true, formulae: ['"Pendiente,Abono,Pagado"'] };
+      const regla = (txt, argb) => ({ type: 'cellIs', operator: 'equal', formulae: ['"' + txt + '"'], style: { fill: { type: 'pattern', pattern: 'solid', bgColor: { argb } }, font: { bold: true } } });
+      ws.addConditionalFormatting({ ref: 'E3:E' + fin, rules: [regla('Pagado', 'FFC6EFCE'), regla('Abono', 'FFFFEB9C'), regla('Pendiente', 'FFFFC7CE')] });
+      const buf = await wb.xlsx.writeBuffer();
+      const slug = ev.titulo.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/gi, '_').toLowerCase();
+      const u = URL.createObjectURL(new Blob([buf], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }));
+      const l = document.createElement('a'); l.href = u; l.download = 'inscritos_' + slug + '_' + ev.fecha + '.xlsx'; l.click(); URL.revokeObjectURL(u);
+    } catch (e) { aviso('No se pudo crear el Excel: ' + e.message); }
+  }
+
+  panel.addEventListener('click', e => {
+    const t = e.target.closest('button'); if (!t) return;
+    if (t.dataset.xls) exportar(t.dataset.xls);
+    if (t.dataset.edit) abrir(eventos.find(x => x.id === t.dataset.edit));
+    if (t.dataset.del) dosPasos(t, () => {
+      eventos = eventos.filter(x => x.id !== t.dataset.del);
+      asistencias = asistencias.filter(a => a.eventoId !== t.dataset.del);
+      save(LS_EV, eventos); save(LS_AS, asistencias); cambio();
+    });
+    if (t.dataset.delrel) dosPasos(t, () => { relatos = relatos.filter(r => r.id !== t.dataset.delrel); save(LS_ST, relatos); cambio(); });
+  });
+  show();
+})();
+  
+</script>
+</body>
+</html>

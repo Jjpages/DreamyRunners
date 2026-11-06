@@ -12,7 +12,6 @@ window.SUPABASE_BUCKET = 'CUBO';
   const CDN = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
   let client;
   let loading = false;
-  let poll;
   let lastImageUrl = '';
 
   const byId = (id) => document.getElementById(id);
@@ -197,31 +196,40 @@ window.SUPABASE_BUCKET = 'CUBO';
     await loadEvents();
   }
 
-  async function login(form) {
-    const emailInput = byId('adm-user');
-    const passwordInput = byId('adm-pass');
-    const email = emailInput?.value.trim();
-    const password = passwordInput?.value;
+  function login(form) {
+    const email = byId('adm-user')?.value.trim().toLowerCase();
+    const password = byId('adm-pass')?.value;
     const errorBox = byId('login-err');
     const button = form.querySelector('[type="submit"]');
     if (button) { button.disabled = true; button.textContent = 'Ingresando…'; }
     if (errorBox) errorBox.hidden = true;
-    try {
-      const { data, error } = await client.auth.signInWithPassword({ email, password });
-      if (error) throw error;
-      sessionStorage.setItem('adm', '1');
-      sessionStorage.setItem('adm-user', data.user?.email || email);
-      showAdmin(data.user);
-      await loadEvents();
-    } catch (error) {
-      console.error('Falló el inicio de sesión:', error);
-      if (errorBox) {
-        errorBox.textContent = 'No se pudo iniciar sesión. Usa el correo invitado y la contraseña que configuraste en Supabase Auth.';
-        errorBox.hidden = false;
+
+    (async () => {
+      try {
+        if (!client) throw new Error('La conexión con Supabase todavía no está lista. Recarga la página e inténtalo de nuevo.');
+        const { data, error } = await client.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        if (!data?.user) throw new Error('Supabase no devolvió un usuario para esta sesión.');
+        sessionStorage.setItem('adm', '1');
+        sessionStorage.setItem('adm-user', data.user.email || email);
+        showAdmin(data.user);
+        await loadEvents();
+      } catch (error) {
+        console.error('Falló el inicio de sesión en Supabase:', error);
+        let message = error?.message || 'Error desconocido de autenticación.';
+        if (/invalid login credentials/i.test(message)) {
+          message = 'Supabase rechazó el correo o la contraseña. Verifica que el correo esté confirmado y que el usuario pertenezca al proyecto Dreamy Runners conectado por esta web.';
+        } else if (/email not confirmed/i.test(message)) {
+          message = 'El correo aún no está confirmado. Confírmalo desde el enlace enviado por Supabase Auth.';
+        }
+        if (errorBox) {
+          errorBox.textContent = `No se pudo iniciar sesión: ${message}`;
+          errorBox.hidden = false;
+        }
+      } finally {
+        if (button) { button.disabled = false; button.textContent = 'Entrar'; }
       }
-    } finally {
-      if (button) { button.disabled = false; button.textContent = 'Entrar'; }
-    }
+    })();
   }
 
   async function logout() {
@@ -239,7 +247,7 @@ window.SUPABASE_BUCKET = 'CUBO';
       userInput.autocomplete = 'username';
     }
     const demo = document.querySelector('#form-login .muted');
-    if (demo) demo.textContent = 'Inicia sesión con el correo y la contraseña configurados en Supabase Auth.';
+    if (demo) demo.textContent = 'Inicia sesión con el correo y la contraseña de un usuario de Supabase Auth en el proyecto Dreamy Runners.';
 
     // Capture phase prevents the former demo/localStorage admin handlers from running.
     document.addEventListener('submit', (event) => {
@@ -276,7 +284,7 @@ window.SUPABASE_BUCKET = 'CUBO';
       const preview = byId('ev-prev');
       const file = fileInput.files?.[0];
       if (!file || !preview) return;
-      const localUrl = URL.createObjectURL(file);
+      const localUrl = window.URL.createObjectURL(file);
       preview.innerHTML = `<img src="${escapeHtml(localUrl)}" alt="Vista previa">`;
     });
   }
@@ -313,7 +321,7 @@ window.SUPABASE_BUCKET = 'CUBO';
     });
 
     loadEvents();
-    poll = window.setInterval(loadEvents, 30000);
+    window.setInterval(loadEvents, 30000);
     document.addEventListener('visibilitychange', () => {
       if (!document.hidden) loadEvents();
     });
@@ -327,7 +335,14 @@ window.SUPABASE_BUCKET = 'CUBO';
     script.async = true;
     script.dataset.dreamySupabaseSdk = 'true';
     script.onload = startClient;
-    script.onerror = () => console.error('No se pudo cargar Supabase JS desde jsDelivr.');
+    script.onerror = () => {
+      console.error('No se pudo cargar Supabase JS desde jsDelivr.');
+      const errorBox = byId('login-err');
+      if (errorBox) {
+        errorBox.textContent = 'No se pudo cargar el cliente de Supabase. Revisa la conexión e inténtalo de nuevo.';
+        errorBox.hidden = false;
+      }
+    };
     document.head.appendChild(script);
   }
 

@@ -8,7 +8,7 @@ window.SUPABASE_BUCKET = 'CUBO';
 
   const URL = window.SUPABASE_URL;
   const KEY = window.SUPABASE_ANON_KEY;
-  const BUCKET = window.SUPABASE_BUCKET;
+  const BUCKET = window.SUPABASE_BUCKET || 'CUBO';
   const CDN = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
   let client;
   let loading = false;
@@ -125,10 +125,28 @@ window.SUPABASE_BUCKET = 'CUBO';
     return Number.isFinite(number) ? number : null;
   }
 
+  async function ensureBucketExists(bucketName) {
+    if (!bucketName) {
+      throw new Error('No hay un bucket de Supabase Storage configurado. Revisa window.SUPABASE_BUCKET en config.js.');
+    }
+    try {
+      const { data, error } = await client.storage.listBuckets();
+      if (error) throw error;
+      const names = (data || []).map((b) => b.name);
+      if (!names.includes(bucketName)) {
+        throw new Error(`Bucket "${bucketName}" no existe en este proyecto de Supabase Storage. Entra a Storage y usa el nombre exacto del bucket. El valor actual de config.js debe coincidir con el bucket real.`);
+      }
+    } catch (error) {
+      if (error?.message && /Bucket/.test(error.message)) throw error;
+      throw new Error(`No se pudo validar el bucket "${bucketName}": ${error?.message || 'error desconocido'}`);
+    }
+  }
+
   async function uploadImage(file) {
     if (!file) return lastImageUrl;
     if (!file.type.startsWith('image/')) throw new Error('El archivo seleccionado no es una imagen.');
     if (file.size > 8 * 1024 * 1024) throw new Error('La imagen debe pesar menos de 8 MB.');
+    await ensureBucketExists(BUCKET);
     const { data: authData } = await client.auth.getUser();
     const uid = authData?.user?.id;
     if (!uid) throw new Error('Inicia sesión como administrador antes de subir una imagen.');

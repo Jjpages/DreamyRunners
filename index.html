@@ -776,8 +776,8 @@ function pasadas() {
     foto: e.foto || phSvg(e.id),
   })).sort((a, b) => b.fecha.localeCompare(a.fecha));
 }
-const EMOJIS = ['👏', '❤️', '🔥', '🥾', '😮'];
-const RAPIDOS = ['😀', '😍', '👏', '🔥', '🥾', '⛰️', '💚'];
+const EMOJIS = ['👏', '❤️', '😮'];
+const RAPIDOS = ['😀', '😍', '⛰️'];
 function renderRelatos() {
   const box = $('relatos'); if (!box) return;
   const q = ($('buscar') ? $('buscar').value : '').trim().toLowerCase();

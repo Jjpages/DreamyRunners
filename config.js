@@ -1,7 +1,8 @@
 /* Supabase integration for Dreamy Runners. Only the publishable key belongs here. */
 window.SUPABASE_URL = 'https://hunnjhkdipnguzrmtnxp.supabase.co';
 window.SUPABASE_ANON_KEY = 'sb_publishable_sGkcfHf4xm9R1TfRwF6BKg_TStjl8k5';
-window.SUPABASE_BUCKET = 'CUBO';
+// El dashboard muestra CUBO como nombre; la ruta del bucket indica que su ID es BUCKET.
+window.SUPABASE_BUCKET = 'BUCKET';
 
 (function () {
   'use strict';
@@ -102,17 +103,10 @@ window.SUPABASE_BUCKET = 'CUBO';
     if (!uid) throw new Error('Inicia sesión como administrador antes de subir una imagen.');
     const safeName = file.name.normalize('NFKD').replace(/[^a-zA-Z0-9._-]/g, '-').slice(-100) || 'imagen';
     const path = `${uid}/${Date.now()}-${safeName}`;
-    // No usamos storage.listBuckets(): esa llamada puede ocultar buckets al usuario autenticado.
-    // Intentamos la subida al ID configurado y mostramos el error real que devuelva Storage.
     const { data, error } = await client.storage.from(BUCKET).upload(path, file, {
       cacheControl: '3600', upsert: false, contentType: file.type
     });
-    if (error) {
-      if (/bucket not found/i.test(error.message || '')) {
-        throw new Error(`Supabase Storage no encuentra el bucket "${BUCKET}" en el proyecto configurado. Confirma el ID del bucket y que config.js y el proyecto de Supabase coincidan.`);
-      }
-      throw error;
-    }
+    if (error) throw error;
     return client.storage.from(BUCKET).getPublicUrl(data.path).data.publicUrl;
   }
 

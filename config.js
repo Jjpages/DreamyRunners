@@ -9,7 +9,7 @@ window.SUPABASE_BUCKET = 'BUCKET';
   const URL = window.SUPABASE_URL;
   const KEY = window.SUPABASE_ANON_KEY;
   const BUCKET = window.SUPABASE_BUCKET;
-  const CDN = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  const CDN = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js';
   let client;
   let loading = false;
   let lastImageUrl = '';
@@ -218,8 +218,12 @@ window.SUPABASE_BUCKET = 'BUCKET';
   function loadSdk() {
     if (window.supabase?.createClient) return startClient();
     if (document.querySelector('script[data-dreamy-supabase-sdk]')) return;
-    const script = document.createElement('script'); script.src = CDN; script.async = true;
-    script.dataset.dreamySupabaseSdk = 'true'; script.onload = startClient;
+    const script = document.createElement('script');
+    script.src = CDN;
+    script.async = false;
+    script.defer = true;
+    script.dataset.dreamySupabaseSdk = 'true';
+    script.onload = startClient;
     script.onerror = () => {
       console.error('No se pudo cargar Supabase JS desde jsDelivr.');
       const errorBox = byId('login-err');
@@ -227,6 +231,7 @@ window.SUPABASE_BUCKET = 'BUCKET';
     };
     document.head.appendChild(script);
   }
+
   if (!URL || !KEY) { console.error('Falta configurar la URL o la clave pública de Supabase.'); return; }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', loadSdk, { once: true });
   else loadSdk();

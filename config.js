@@ -10,8 +10,10 @@ window.SUPABASE_BUCKET = 'BUCKET';
   const KEY = window.SUPABASE_ANON_KEY;
   const BUCKET = window.SUPABASE_BUCKET;
   const CDN = 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2';
+  const COMMENTS_TABLE = 'comentarios';
   let client;
   let loading = false;
+  let commentsLoading = false;
   let lastImageUrl = '';
   const byId = (id) => document.getElementById(id);
   const toast = (message) => typeof window.aviso === 'function' ? window.aviso(message) : console.info(message);
@@ -44,6 +46,88 @@ window.SUPABASE_BUCKET = 'BUCKET';
     } finally { loading = false; }
   }
 
+  async function loadComments() {
+    if (!client || commentsLoading || typeof relatos === 'undefined') return;
+    commentsLoading = true;
+    try {
+      const { data, error } = await client.from(COMMENTS_TABLE)
+        .select('id, caminata_id, autor, texto, created_at')
+        .order('created_at', { ascending: true });
+      if (error) throw error;
+      relatos = (data || []).map((row) => ({
+        id: String(row.id),
+        caminataId: String(row.caminata_id),
+        autor: row.autor || '',
+        texto: row.texto || '',
+        fecha: row.created_at || ''
+      }));
+      if (typeof renderRelatos === 'function') renderRelatos();
+      if (isAdmin()) renderAdminComments();
+    } catch (error) {
+      console.error('No se pudieron cargar los comentarios de Supabase:', error);
+      toast('No se pudieron cargar los comentarios. Revisa la conexión y las políticas de lectura de Supabase.');
+    } finally { commentsLoading = false; }
+  }
+  window.cargarComentariosSupabase = loadComments;
+
+  function renderAdminComments() {
+    const box = byId('adm-relatos');
+    if (!box || !isAdmin() || typeof relatos === 'undefined') return;
+    box.innerHTML = relatos.map((row) => `
+      <div class="card adm-ev">
+        <div style="flex:1;min-width:200px"><strong>${escapeHtml(row.autor)}</strong><br>
+          <span class="muted">${escapeHtml(row.texto.slice(0, 120))}${row.texto.length > 120 ? '…' : ''}</span>
+        </div>
+        <button type="button" class="btn small ghost" data-delrel="${escapeHtml(row.id)}">Eliminar</button>
+      </div>`).join('') || '<p class="muted">Aún no hay comentarios.</p>';
+  }
+
+  async function submitComment(form) {
+    const author = form.elements.autor.value.trim();
+    const text = form.elements.texto.value.trim();
+    const hikeId = form.dataset.post;
+    if (!author || !text) return;
+    try { localStorage.setItem('senderismo_nombre', author); } catch {}
+    if (!client) {
+      toast('Conectando con la base de datos... intenta de nuevo en un segundo.');
+      return;
+    }
+    const button = form.querySelector('button[type="submit"]');
+    if (button) { button.disabled = true; button.textContent = 'Enviando…'; }
+    try {
+      const { error } = await client.from(COMMENTS_TABLE).insert({
+        caminata_id: hikeId,
+        autor: author,
+        texto: text
+      });
+      if (error) throw error;
+      form.elements.texto.value = '';
+      await loadComments();
+      toast('¡Comentario publicado! ✅');
+    } catch (error) {
+      console.error('Error al guardar el comentario:', error);
+      toast(`Error al guardar: ${error.message || 'Verifica las políticas RLS'}`);
+    } finally {
+      if (button) { button.disabled = false; button.textContent = 'Comentar'; }
+    }
+  }
+
+  async function deleteComment(id) {
+    if (!client || !isAdmin()) {
+      toast('Inicia sesión como administrador para eliminar comentarios.');
+      return;
+    }
+    const { error } = await client.from(COMMENTS_TABLE).delete().eq('id', id);
+    if (error) {
+      console.error('Error al eliminar el comentario:', error);
+      toast(`Error al eliminar de Supabase: ${error.message}`);
+      return;
+    }
+    await loadComments();
+    if (typeof refresh === 'function') refresh();
+    toast('Comentario eliminado.');
+  }
+
   function isAdmin() {
     return !!(client && sessionStorage.getItem('adm') === '1');
   }
@@ -53,7 +137,7 @@ window.SUPABASE_BUCKET = 'BUCKET';
     if (login) login.hidden = !!user;
     if (panel) panel.hidden = !user;
     if (name && user) name.textContent = user.email || 'Administrador';
-    if (user) renderAdminEvents();
+    if (user) { renderAdminEvents(); renderAdminComments(); }
   }
 
   function renderAdminEvents() {
@@ -157,7 +241,7 @@ window.SUPABASE_BUCKET = 'BUCKET';
       if (error) throw error;
       if (!data?.user) throw new Error('Supabase no devolvió un usuario para esta sesión.');
       sessionStorage.setItem('adm', '1'); sessionStorage.setItem('adm-user', data.user.email || email);
-      showAdmin(data.user); await loadEvents();
+      showAdmin(data.user); await loadEvents(); await loadComments();
     } catch (error) {
       console.error('Falló el inicio de sesión en Supabase:', error);
       let message = error?.message || 'Error desconocido de autenticación.';
@@ -180,9 +264,43 @@ window.SUPABASE_BUCKET = 'BUCKET';
       if (event.target.id === 'form-login') { event.preventDefault(); event.stopImmediatePropagation(); login(event.target); }
       else if (event.target.id === 'form-evento') { event.preventDefault(); event.stopImmediatePropagation(); if (event.target.reportValidity()) saveEvent(event.target); }
     }, true);
+    document.addEventListener('submit', (event) => {
+      const form = event.target;
+      if (form.matches('#relatos form.com-form')) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        submitComment(form);
+      }
+    }, true);
     document.addEventListener('click', (event) => {
       const target = event.target.closest('button, input[type="button"]');
       if (!target) return;
+      if (target.dataset.delrel) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        if (!isAdmin()) { toast('Inicia sesión como administrador para eliminar comentarios.'); return; }
+        if (target.dataset.supaDeleteArmed) {
+          target.textContent = target.dataset.supaDeleteText || 'Eliminar';
+          target.classList.remove('peligro');
+          delete target.dataset.supaDeleteArmed;
+          delete target.dataset.supaDeleteText;
+          deleteComment(target.dataset.delrel);
+        } else {
+          target.dataset.supaDeleteArmed = '1';
+          target.dataset.supaDeleteText = target.textContent;
+          target.textContent = '¿Seguro? Sí, eliminar';
+          target.classList.add('peligro');
+          window.setTimeout(() => {
+            if (target.isConnected && target.dataset.supaDeleteArmed) {
+              target.textContent = target.dataset.supaDeleteText || 'Eliminar';
+              target.classList.remove('peligro');
+              delete target.dataset.supaDeleteArmed;
+              delete target.dataset.supaDeleteText;
+            }
+          }, 4000);
+        }
+        return;
+      }
       if (target.id === 'btn-salir') { event.preventDefault(); event.stopImmediatePropagation(); logout(); }
       else if (target.id === 'btn-nuevo') { event.preventDefault(); event.stopImmediatePropagation(); openEventForm(null); }
       else if (target.dataset.supaEdit) { event.preventDefault(); event.stopImmediatePropagation(); openEventForm(target.dataset.supaEdit); }
@@ -199,6 +317,7 @@ window.SUPABASE_BUCKET = 'BUCKET';
     if (client || !window.supabase?.createClient) return;
     client = window.supabase.createClient(URL, KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
     window.DR_SUPABASE = client; installHandlers();
+    if (typeof relatos !== 'undefined') { relatos = []; if (typeof renderRelatos === 'function') renderRelatos(); }
     client.auth.getSession().then(({ data }) => {
       const user = data?.session?.user || null;
       if (user) { sessionStorage.setItem('adm', '1'); sessionStorage.setItem('adm-user', user.email || 'Administrador'); }
@@ -211,8 +330,11 @@ window.SUPABASE_BUCKET = 'BUCKET';
       else { sessionStorage.setItem('adm', '1'); sessionStorage.setItem('adm-user', user.email || 'Administrador'); }
       showAdmin(user);
     });
-    loadEvents(); window.setInterval(loadEvents, 30000);
-    document.addEventListener('visibilitychange', () => { if (!document.hidden) loadEvents(); });
+    loadEvents();
+    loadComments();
+    window.setInterval(loadEvents, 30000);
+    window.setInterval(loadComments, 30000);
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) { loadEvents(); loadComments(); } });
   }
 
   function loadSdk() {
